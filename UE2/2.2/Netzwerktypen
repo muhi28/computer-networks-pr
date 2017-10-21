@@ -1,0 +1,23 @@
+Beschreiben Sie die Unterschiede zwischen leitungsvermittelnden und paketvermittelnden
+Netzwerken (engl. circuit- and packet-switched networks) anhand eines konkreten Beispiels.
+Gehen Sie dabei auch auf die Vor- bzw. Nachteile der beiden Ansätze ein.
+
+#-#-# Leitungsvermittelnde Netzwerke
+sind vergleichbar mit Telefonanrufen oder einem Schienennetz. Ein exklusiver logischer oder physikalischer
+Pfad wird zwischen Sender und Empfänger designiert, vergleichbar mit einer Krititschen Zone. Genutzte
+Ressourcen, benutzt oder nicht, stehen in dieser Zeit anderen Usern nicht zur Verfügung.
+
+Vgl.: Circut_SwitchNetwork.jpg
+
+#-#-# Paketvermittelnde Netzwerke
+sind charakteristisch gesehen wie E-Mails. Daten werden Bufferähnlich zu einem größeren Datensatz zusammengeschrieben,
+welches das Datenpaket ausmacht. Diese werden vollständig gesendet & vollständig empfangen, wobei
+die Pakete über dynamisch bestehende Pfade via Nodes verschickt wird. Dies ermöglicht parallelen Transfer zwischen
+mehreren Usern und erhöht die Ausfallsicherheit, da die Zielpfade der Pakete zur Laufzeit veränderbar sind.
+
+Vgl.: Packet_Switching.gif
+# Note: Show in Files
+
+Sources:
+* Circuit_SwitchNetwork.jpg >> https://image.slidesharecdn.com/switchingtechniques-100419044805-phpapp02/95/switching-techniques-9-728.jpg?cb=1271652557
+* By Oddbodz - Own work, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=29033823

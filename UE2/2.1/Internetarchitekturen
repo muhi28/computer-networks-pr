@@ -1,0 +1,31 @@
+Beschreiben Sie die allgemeine Architektur des heutigen Internets und seiner
+Internet-Zugangsmöglichkeiten.
+
+Die allgemeine Architektur des Internets ist gegeben durch die Vernetzung der
+Systeme auf unterschiedlichen Ebenen.  Nutzer können über Internet Exchange Points
+("Internetknoten", IX or IXP, auch Network Access Point) verschiedenste Daten
+austauschen und generell werden diese von Providern (ISPs) zur Nutzung dargeboten.
+
+Die meisten ISPs nutzen IX als Schnittstellen zwischen Rechnernetzwerken, wobei der
+gesamte Verbund aller autonomen Systeme das Internet bilden. Weltweit existieren ca.
+340 IXPs, wobei kleinere Knotenpunkte als Uplink zu den 'Carriern', den ISPs, dienen.
+  Die Vorteile mehrerer IX sind primär Effizienz und Ausfallsicherheit bei Datentransfer, wobei
+die Kosten für den Betrieb eines IX von den dazugehörigen ISPs geteilt werden. Die Gebühren
+berechnen sich pro genutzten Port per eigenen IXP. Die Kosten für den jeweiligen Port sind
+abhängig von dessen Transferrate - derzeit zwischen 10Mbps und 100 Gbps.
+
+Bei den einzelnen ISPs unterscheidet man zwischen mehreren Kategorien (Tiers):
+* Tier 1.: National & oftmals International die größten Betreiber.
+    z.B.: Deutsche Telekom, KPN, AT&T, Verizon, NTT, Telecom Italia,..
+* Tier 2.: Transit Provider.
+    Nehmen Downstream von Tier 1 in Anspruch und bieten Upstream für Tier 3.
+    z.B.: Vodafone, Tele2, Comcast
+* Tier 3.: Lokale Provider. Sie verkaufen Transitmöglichkeiten an Nutzer.
+Es bleibt jedoch zu beachten dass die Kategorisierung regelrecht schwammig geführt wird.
+
+Weiters ist das Internet noch durch Protokolle unterstützt, um fehlerfreien Austausch
+zu garantieren, oft beschrieben mithilfe des ISO/OSI-Referenzmodells (siehe 2.3).
+
+Sources:
+Internet_Architecture.png >> https://cyber.harvard.edu/digitaldemocracy/internetarchitecture.html
+ISO_OSIReferenceModel.png >> Gemäß VO-Vorlagen von RN; Ch 2, p 10

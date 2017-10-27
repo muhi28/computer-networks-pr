@@ -1,0 +1,22 @@
+%%
+%% Author: thompson
+%% 27.10.17
+%%
+
+% Preamble
+\documentclass[11pt,a4paper,titlepage,twoside,final]{book}
+
+% Packages
+\usepackage{standalone}
+\usepackage{a4wide}
+\usepackage{graphicx}
+\usepackage{scrextend}      % Intending
+
+% Document
+\begin{document}
+
+    \graphicspath{{2.2/}{2.3/}}          % Never forget this fucking /
+    \input{2.1/InternetArchitectures.tex}
+    \input{2.2/NetworkTypes.tex}
+    \input{2.3/ISO_OSIRefModel.tex}
+\end{document}

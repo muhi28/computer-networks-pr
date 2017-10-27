@@ -25,6 +25,24 @@
         \item Physical Layer\\
         Dieser Layer beschreibt die fundamentale Netzwerkkommunikation. Datentransfer via
         physischem Layer sind reine Bitstreams.
+
+        Hardware:
+        \begin{addmargin}[1em]{1em}
+            PHY-Chip: Ein PHY implementiert die Funktionen Senden und Empfangen von Daten zwischen
+            Geräten mithilfe des Datalink Layers (MAC, LLC). Es enkodiert und dekodiert einkommende
+            Übertragungen und Galvanische Trennung (Blockt ungewollten Datenempfang).
+        \end{addmargin}
+
+        Protokolle:
+        \begin{addmargin}[1em]{1em}
+            Integrated Services Digital Network
+            Universal Serial Bus
+            Bluetooth
+            Ethernet
+        \end{addmargin}
+
+        Normen:
+
         \item Data Link Layer\\
         Der Datenlink nutzt Frames zur Übertragung von Datensätzen. Frames bestehen aus einer gewissen Anzahl
         an Bit-Blöcken und einer Prüfsumme, welche die korrekte Datenflussübertragung gewährleistet.
@@ -35,7 +53,7 @@
         Mithilfe der 'Data Flow Control' kann man die Dynamik der Frameübertragung steuern, etwa wie schnell
         Blöcke verschickt werden.
 
-        Genutzte Hardware:
+        Hardware:
         \begin{addmargin}[1em]{1em} % Left & right
             Bridge \& Switch: Arbeiten via Media Access Control(Mac) oder Logical Link Control(LLC).\\
             Die MAC-Bridge schützt gegen Kollisionen via Aufteilung des Netzes in verschiedene Kollisionsdomänen, d.H.
@@ -48,8 +66,15 @@
         \includegraphics[width=\textwidth]{Network_Bridging.png}
         \footnote[1\small \emph{Schemata of Bridge/Switch inside a Network}]{By Crvincenzi - MS Powerpoint, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=25610536}
 
-        Protokolle: HDLC, SDLC, DDCMP, Shortest Path Bridging
-        Normen: IEEE, FDDI
+        Protokolle:
+        \begin{addmargin}[1em]{1em}
+            HDLC - High-Level Data Link Control: Transmition of sync/async frames\\
+            SDLC - Synchronous Data Link Control: Bitsynchron \& Serielle Übertragung\\
+            DDCMP - Digital Data Communications Message Protocol: Point-to-Point Transfer (Sicherheit)\\
+            SPB - Shortest Path Bridging: Aufbau \& Konfig. + Multipath Routing\\
+        \end{addmargin}
+
+        Normen: IEEE, FDDI, ISO\\
 
         \item Network Layer
         \item Transport Layer

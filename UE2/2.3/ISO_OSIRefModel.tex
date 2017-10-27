@@ -35,13 +35,12 @@
 
         Protokolle:
         \begin{addmargin}[1em]{1em}
-            Integrated Services Digital Network
-            Universal Serial Bus
-            Bluetooth
-            Ethernet
+            Integrated Services Digital Network: Internationaler Standard für Datenübertragung \& Telefonie
+            Universal Serial Bus: Bussystem von Verbindungen um Daten zu übertragen
+            Bluetooth, Ethernet, ...
         \end{addmargin}
 
-        Normen:
+        Normen: % TODO, found fucking nothing
 
         \item Data Link Layer\\
         Der Datenlink nutzt Frames zur Übertragung von Datensätzen. Frames bestehen aus einer gewissen Anzahl
@@ -77,10 +76,37 @@
         Normen: IEEE, FDDI, ISO\\
 
         \item Network Layer
+        Der Network Layer behandelt Weiterleitung und Routing durch multiple Zwischenmedien innerhalb
+        eines Netzwerkes.
+
+        Funktionen:
+        \begin{addmargin}[1em]{1em}
+            - CL-mode: Verbindungslose Kommunikation, über IP\\
+            - Hostadressierung, jeder Host ist einzigartig identifizierbar\\
+            - Weiterleitung: Partitionierung von Netzwerken in Subnetzwerke und Weiterleitung
+            von Daten über Gateways und Router\\
+        \end{addmargin}
+
         \item Transport Layer
+        Die Transportschicht beschreibt den konkreten Datentransfer von A nach B.
+
+        Protokolle:
+        \begin{addmargin}[1em]{1em}
+            - Transmission Control Protocol: TCP/IP - Datentransfer wird kontrolliert weitergegeben. Wird das Paket falsch oder garnicht
+            empfangen, so wird eine Anfrage geschickt welche das Datenpaket neu schickt.
+            Es gibt Flow- und Congestioncontrol. Grundsätzlich genutzt bei HTTP, FTP, SMTP.\\
+            - User Datagram Protocol: UDP/IP - Datentransfer wird losgeschickt, ohne Kontrolle ob das Datenpaket tatsächlich ankommt.
+            Es gibt also weder Flow- noch Congestioncontrol.\\
+        \end{addmargin}
+
         \item Session Layer
+
         \item Presentation Layer
+
         \item Application Layer
+
     \end{enumerate}
+
+    Die 5. und 6. Schicht wird meist impliziert, bzw. wird von der Praxis nicht angenommen.
 
 \end{document}

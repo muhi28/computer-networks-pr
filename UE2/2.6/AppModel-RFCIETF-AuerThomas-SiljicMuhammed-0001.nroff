@@ -8,8 +8,8 @@
 .ds RF FORMFEED %	
 .ds LH RFC 10000
 .ds RH Oktober 2017
-.ds CH RFC-Training
-.ds CF Schichtenmodellierung
+.ds CH Schichtenmodellierung
+.ds CF RFC-Training
 .hy 
 .nh
 .ad l
@@ -66,13 +66,17 @@ Table of Contents
      1.1  Terminologie  . . . . . . . . . . . . . . . . . . . . . . .  3
    2.  Schichtenmodellierung  . . . . . . . . . . . . . . . . . . . .  3
      2.1 Authentifizierung der Kunden . . . . . . . . . . . . . . . .  3
-   3  Security Considerations . . . . . . . . . . . . . . . . . . . .  4
-   4  IANA Considerations . . . . . . . . . . . . . . . . . . . . . .  4
-   5  Referenzen  . . . . . . . . . . . . . . . . . . . . . . . . . .  4
-     5.1  Normative Verweise  . . . . . . . . . . . . . . . . . . . .  4
-     5.2  Informative Verweise  . . . . . . . . . . . . . . . . . . .  4
-   Danksagung . . . . . . . . . . . . . . . . . . . . . . . . . . . .  4
-   Kontakt  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  4
+     2.2. Aktion des Kunden . . . . . . . . . . . . . . . . . . . . .  4
+     2.3. Beendigung der Kundeninteraktion  . . . . . . . . . . . . .  4
+   3  Sicherheitmassnahmen  . . . . . . . . . . . . . . . . . . . . .  4
+     3.1. Wahrung der Kundendaten . . . . . . . . . . . . . . . . . .  5
+     3.2. Betrug und Hackingversuche  . . . . . . . . . . . . . . . .  5
+   4  Service und Wartung . . . . . . . . . . . . . . . . . . . . . .  5
+   5  Referenzen  . . . . . . . . . . . . . . . . . . . . . . . . . .  5
+     5.1  Normative Verweise  . . . . . . . . . . . . . . . . . . . .  5
+     5.2  Informative Verweise  . . . . . . . . . . . . . . . . . . .  5
+   Danksagung . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6
+   Kontakt  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6
 .fi
 .in 3
 
@@ -105,6 +109,11 @@ Das Wort "Bank" gelte als Abbrevation von "Banksystem"
 "ATM"	En.: der allgemeinnuetzige Geldautomat
 .br
 
+"ATM_Lx"	... x sei {1,2,3,4,5} beschreibt die einzelnen genutzten Schichten innerhalb des Automaten. Dabei gilt: Schicht 1 = Physischer Layer; Schicht 2 = Datalink Layer; Schicht 3 = Network Layer; Schicht 4 = Transport Layer; Schicht 5 = Application Layer
+.br
+
+"Bank_Ly"	... y sei {1,2,3,4}; Behandelt die genutzten Schichten innerhalb des Bankingsystems. Analog wie bei "ATM_Lx" gilt hier: Schicht 1 = Physischer Layer; Schicht 2 = Datalink Layer; Schicht 3 = Network Layer; Schicht 4 = Transport Layer;
+
 .ti 0
 2.  Schichtenmodellierung 
 
@@ -115,6 +124,28 @@ Anhand mehrerer .pdfs soll sichergestellt werden, wie die Anwendungsumsetzung de
 2.1 Authentifizierung der Kunden
 
 Siehe */ApplicationModel_Banking_FirstIteration.png
+.br
+Das Sequenzdiagramm soll klarstellen wie der Datenfluss beginnt, sobald ein Kunde die Karte in den ATM steckt.
+In dem Moment, als die IBAN verifiziert wird, beginnt der Datenfluss seitens des ATM. Er versetzt Daten in binaere Form und sendet diese via Sublayer in das entsprechende Netzwerk.
+Gibt es waehrend dieses Datentransfers einen Fehler, so wird via TCP-Protokoll eine Fehlernachricht zurueckgeschickt.
+Sobald das Bankingsystem diesen Request bekommt und bearbeitet, wird gesendet ob die Authentifzierung erfolgreich war oder nicht.
+Bei Erfolg, sendet das System Kundendaten zurueck, um weitere Schritte zu verkuerzen.
+
+
+.ti 0
+2.2. Aktion des Kunden
+
+Siehe */ApplicationModel_Banking_SecondIteration.png
+
+Nachdem der Kunde die Bestaetigung der Authentifizierung erhaelt, bekommt jener die Option eine Aktion zu waehlen. Je nach Aktion werden unterschiedliche Funktionen innerhalb des ATM aufgerufen. Bei weniger kritischen Aktionen wie 'Kontoauszug' kann der Kunde ohne weitere Eingabe von Daten direkten Output erwarten, bei erneutem Austausch zwischen ATM und Banksystem um die Kreditibilitaet zu wahren.
+
+Bei Geldauszuegen oder -einzuegen muss der Kunde erneut seine Identitaet mittels PIN-Code bestaetigen, welcher jedoch im ATM vorliegt. Ist der PIN falsch, so wird die Aktion abgebrochen und bei dreimaliger falscher Eingabe wird das Konto voruebergehend gesperrt. Ist der PIN richtig, so werden Daten erneut aus dem System erhoben, um den Kunden ueber seinen Kontostand zu informieren. Sollte der Kunde einen Wert ueber dem gegenwaertigen Kontostand erheben, so blockt der ATM diese Transaktion zum Wohle des Kunden ab. Andernfalls gibt der ATM den Betrag in X-Euro Scheinen aus und beendet die Interaktion.
+
+.ti 0
+2.3. Beendigung der Kundeninteraktion
+
+Die Beendigung der Kunde-ATM-Interaktion muss zu jeder, systematisch guenstigen Zeit gewaehrleistet sein. Im Falle eines jeden Abbruches werden Daten unwiederruflich verworfen und die Karte ausgeworfen.  Eine systematisch unguenstige Zeit, in welcher die Aktion nicht einfach beendet werden darf, waere beispielsweise der Moment der Geldeingabe, der Ausgabe oder aehnlichen systeminternen Funktionalitaeten des ATM.
+
 .in 6
 .nf
 .\"Definitions and code {
@@ -124,34 +155,31 @@ Siehe */ApplicationModel_Banking_FirstIteration.png
 .fi
 .in 3
 
-.\" Directives (e.g .ti and .in) and escape sequences (\, \&, \%, \" and \0) are used to control
-.\" Formatting and are not displayed in the text document.
-.\"Special characters examples: 
-.\"The characters \0, \&, \%, \" are not shown in text.
-.\"However, the characters \\0, \\&, \\%, \\" are displayed.
-.\"
-.\" You can display these character sequences in the text document by
-.\" inserting the escape character '\'.
-
-.\" \&.ti 0  is displayed in text instead of used as a directive. 
-.br
-.\" \&.\\"  is displayed in document instead of being treated as a comment
-
-.\" C:\\dir\\subdir\\file.ext  Shows inclusion of backslash "\\".
-
-
-.bp
 .ti 0
-3  Security Considerations
+3  Sicherheitmassnahmen
 
-<Security considerations text>
-
+Um gegen Betrug und unlautere Mittel vorzugehen, benoetigt es einiger Vorkehrungen.
 
 .ti 0
-4  IANA Considerations
+3.1. Wahrung der Kundendaten
 
-<IANA considerations text>
+Um die Kundendaten absolut zu wahren, muss man das Netzwerk, in welchem sich der ATM selbst befindet, beschraenken. Via LOC von ATM zu einem lokalen Banksystem und via MAC zu den Hauptservern, kann ein nahezu lueckenloses Netzwerk, und damit eine sichere Datenuebertragung sicherstellen.
 
+Es gilt auch den Kunden einen Hinweis auf deren Karte zu geben, bevor sie den ATM verlassen.
+
+.ti 0
+3.2. Betrug und Hackingversuche
+
+Um potenzielle Betrueger davon abzuhalten, sich auf unlautere Weise Geld anzueignen, Bedarf es eines robusten Automaten. Bei der Geldausgabe ist stets die Karte vor dem Geldbetrag auszugeben, um einen synchronen Dirty-Read/Write zu vermeiden, welcher via E-Banking ausgefuehrt werden kann (auch wenn dessen Chance gegen 0 verlaeuft).
+
+Weiters gilt es das Netzwerk innerhalb einer Bankfiliale zu kapseln, um potenzielle Angriffe via Netzwerk zu vermeiden. Wenn ein Kunde nach einem Netzwerk fragt, so moege er das oeffentliche Netzwerk innerhalb der Bank nutzen, nie das des Banksystemes selbst.
+
+Lorem Ipsum
+
+.ti 0
+4  Service und Wartung
+
+dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat
 
 .ti 0
 5  Referenzen
@@ -174,9 +202,10 @@ Siehe */ApplicationModel_Banking_FirstIteration.png
 
 .in 14
 .\" \# REF  -- Managed reference list.
-Alpen-Adria-Universität Klagenfurt (AAU), Faculty of Technical Sciences (TEWI) - Computer Networks and Network Programming (www.aau.at)
+Alpen-Adria-Universitaet Klagenfurt (AAU), Faculty of Technical Sciences (TEWI) - Computer Networks and Network Programming (www.aau.at)
 .\" \# ERF -- End of managed reference list
 .in 3
+.bp
 
 .ti 0
 Danksagung

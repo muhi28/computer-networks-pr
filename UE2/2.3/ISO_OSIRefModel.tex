@@ -29,7 +29,7 @@
         \begin{addmargin}[1em]{1em}
             PHY-Chip: Ein PHY implementiert die Funktionen Senden und Empfangen von Daten zwischen
             Geräten mithilfe des Datalink Layers (MAC, LLC). Es enkodiert und dekodiert einkommende
-            Übertragungen und Galvanische Trennung (Blockt ungewollten Datenempfang).
+            Übertragungen und  ermöglicht Galvanische Trennung (blocken ungewollter Daten).
         \end{addmargin}
 
         \emph{Protokolle}:
@@ -75,8 +75,8 @@
         \footnote[1\small \emph{Schemata of Bridge/Switch inside a Network}]{By Crvincenzi - MS Powerpoint, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=25610536}
 
         \item \textbf{\underline{Network Layer}}\\
-        Der Network Layer behandelt die Weiterleitung und Routing durch multiple Zwischenmedien innerhalb
-        eines Netzwerkes.
+        Der "Network Layer", oder "the Routing Layer", behandelt die Weiterleitung und
+        Routing durch multiple Zwischenmedien innerhalb eines Netzwerkes.
 
         \emph{Funktionalitäten}:
         \begin{addmargin}[1em]{1em}
@@ -87,7 +87,7 @@
         \end{addmargin}
 
         \item \textbf{\underline{Transport Layer}}\\
-        Die Transportschicht beschreibt den konkreten Datentransfer von A nach B, genannt "Windowing": Wieviele Daten geschickt oder empfangen werden,
+        Dieser beschreibt den konkreten Datentransfer von A nach B, genannt "Windowing": Wieviele Daten geschickt oder empfangen werden,
         wann Daten gesendet werden, u.s.w..
 
         \emph{Protokolle}:
@@ -100,13 +100,15 @@
         \end{addmargin}
 
         \item \textbf{\underline{Session Layer}}\\
-        Der Sitzungsschicht beschreibt alles rund um das öffnen, schließen und managen von Sessions zwischen Usern.
-        Es handelt sich dabei um einen anhaltenden Dialog der Geräte.
+        Es beschreibt alles rund um das öffnen, schließen und managen von Sessions zwischen Usern.
+        Es handelt sich dabei um einen anhaltenden Dialog der Geräte und behandelt Datensynchronisation und 'Checkpointing'\footnote[1]{Save states bei Fehler :: Laden bei Page 101 führt zu Fehler $<$=$>$  Neuladen von 1-100 nicht notwendig}.
 
         \emph{Protokolle}:
         \begin{addmargin}[1em]{1em}
             - ISO 8326 - OSI protocol suite: Neuverbindungsaufbau nach Störungen
             - ZIP - Zone Information Protocol (AppleTalk)
+            - SMB - Server Message Block
+            - RPC - Remote Procedure Call
         \end{addmargin}
 
         Wenn man beispielsweise eine Website aufruft, so startet der Layer eine 'Session' mit dem jeweiligen Webserver.
@@ -115,15 +117,54 @@
         Die Präsentationsschicht dient der Darstellung der Übertragenen Daten, auch 'Syntax Layer' genannt.
         Durch Konventionen wie ISO, ASCII oder EBCDIC werden die Bitcodes in erste Strukturen umgewandelt.
 
-        Alles was im Rahmen des eigenen Betriebssystemes passiert.
+        Alles was im Rahmen des eigenen Betriebssystemes passiert kann dieser Schicht zugeordnet werden: Protokollkonvertierung,
+        Datenübersetzung, Kompression, Enkryption, Interpretation von graphischen Kommandos,...
 
         \item \textbf{\underline{Application Layer}}\\
-        Die Applikationsschicht spezifiziert die genutzten Protokolle und Schnittstellen innerhalb der Kommunikation
-        zweier Usern, üblicherweise via Internet Protocol Suite: TCP/IP und Open Systems Interconnection Model: OSI
+        Die Anwendungsschicht spezifiziert den Zugriff auf das Netzwerk, beispielsweise Client/Server-Verbindung, P2P, etc.
 
-        Prinzipiell alles womit der User direkt arbeitet, z.B. FireFox, Chrome, Skype, Outlook, ...
+        Es stellt sicher, dass eine Applikation auf System A genauso aussieht wie auf System B, was
+        prinzipiell alles wiederspiegelt womit der User direkt arbeitet, z.B. FireFox, Chrome, Skype, Outlook, ...\\
+
     \end{enumerate}
 
-    Die 5. und 6. Schicht wird meist impliziert.
+    Die Kommunikation derselben Schichten zwischen 2 Usern geschieht anhand der definierten Protokolle und dient grundsätzlich dem Exception-Handling:
+\begin{itemize}
+    \item[$\diamond$] Physical Layer: Verbindungsunterbruch auf Basis der Hardware
+    \item[$\diamond$] Datalink Layer: Bitsynchrone Übertragung, Serielle Übertragung, Point2Point-Transfer, richtige MAC/LLC-Adressierung
+    \item[$\diamond$] Network Layer: Verwerfen fehlerbehafteter Pakete, Routing
+    \item[$\diamond$] Transport Layer: Übertragungsprotokoll: TCP-IP oder UDP-IP
+    \item[$\diamond$] Session Layer: Bestätigung zum Datentransfer, Erhalt der Daten ist möglich, Verbindungsaufbau, Timeout-Handling
+    \item[$\diamond$] Presentation Layer: Kodierungsformat, Enkryption, Dekryption
+    \item[$\diamond$] Application Layer: Darstellung durch jeweilige User-Applikation.
+\end{itemize}
+
+    \underline{Kurzum:}\\
+    - Gleiche Schichten kommunizieren mittels Protokollen miteinander\\
+    - Zwischen den Schichten kommen Schnittstellen zum Einsantz\\
+    - Obere Schichten bauen auf den Unteren auf.\\
+    - Die 5. und 6. Schicht wird meist impliziert.\\
+
+    \begin{addmargin}[1em]{2em}
+        \textbf{\underline{Beispiel: Versenden einer E-Mail}}
+    \end{addmargin}
+    Das Senden einer Mail geschieht durch den User direkt im Application Layer.\\
+    Dieser gibt den Datensatz weiter an den Presentation Layer, welcher die Mail in eine
+    systemunabhängige Datei umschreibt, inklusive dessen Codierungsform und Enkryption.\\
+    Weiter im Session Layer wird die Sitzung zum Zielempfänger spezifiziert, etwa @gmail.\\
+    Der Transport Layer definiert den Datenübertragungstyp, TCP/IP, UDP/IP.\\
+    Der Network Layer setzt anschließend einen Pfad fest, auf welchem das Datenpaket zum Empfänger
+    gesendet wird. Dies ist später noch änderbar.\\
+    Der Datalink Layer formt aus dem oben erstellten, systemunabhängigen Dateiabbild die 'Frames'.\\
+    Via Bridge \& Switch wird anhand MAC/LLC die Datenübertragung kontrolliert weitergegeben.\\
+    Die Physische Schicht gibt nun die Daten aus dem eigenen System einem Router, bzw. einem Bridge-Device, weiter.\\
+
+\begin{addmargin}[1em]{0em}
+    Anhand des vorgegebenen Pfades werden nun die Daten von A nach B transferiert.\\
+\end{addmargin}
+    In System B treffen nun die Daten aus System A via physischen Layern ein.  Der Datalinklayer setzt die Frames zusammen,
+    der Network Layer bestätigt die korrekte Adressierung, der Transport Layer kommuniziert entsprechend Protokolltypes zurück,
+    der Sitzungslayer bestätigt die erstellte Sitzung der Systeme. Der Presentation layer schreibt Frames in dasselbe Dateiabbild zurück
+    wie vor der Transformierung in Bit und der Applikationslayer gibt die Daten dem Zieladdressaten wieder.
 
 \end{document}

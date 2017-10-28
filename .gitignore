@@ -7,6 +7,9 @@
 # BlueJ files
 *.ctxt
 
+# Latex .aux files
+*.aux
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
@@ -22,3 +25,6 @@
 hs_err_pid*
 .idea/
 Computer-Networks.iml
+UE2/2.1/InternetArchitectures.aux
+UE2/2.2/NetworkTypes.aux
+UE2/2.3/ISO_OSIRefModel.aux

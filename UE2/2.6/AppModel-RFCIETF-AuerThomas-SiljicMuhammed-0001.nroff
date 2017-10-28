@@ -1,0 +1,206 @@
+.pl 10.0i	.\" Page length, Default is 11 inches
+.po 0	.\" Page left margin. 
+.ll 7.2i	.\" Line Length, per default 6i
+.lt 7.2i
+.nr LL 7.2i
+.nr LT 7.2i
+.ds LF Auer & Siljic	.\" .ds <=> Footer/Header
+.ds RF FORMFEED %	
+.ds LH RFC 10000
+.ds RH Oktober 2017
+.ds CH RFC-Training
+.ds CF Schichtenmodellierung
+.hy 
+.nh
+.ad l
+.in 0
+
+.nf	.\" Nofill
+.\"  .tl: Title Lines: '<left component>'<center component>'<right component>' <=> Creates Header
+.tl 'Rechnernetze RFC-Taskforce''A. Thomas'
+.tl 'Request for Comments: 10000''S. Muhammed'
+.tl 'Category: RFC Practice''Streifenmafia'	.\" Needs fix on spacing
+.tl 'Expires: 31/10/2016''28/10/2017'	.\" Dito
+.fi
+
+.ce 5
+Applikationsmodel fuer Bankingsysteme
+.fi
+.in 3
+
+
+.ti 0
+Abstract
+
+Dies ist ein RFC-File im Sinne der 6. Aufgabe von Rechnernetze & Netzwerkprogrammierung hinsichtlich des zu erstellenden Schichtenmodells des Bankingsystemes. Dieses Formular soll dazu dienen Grundlegendes hinsichtlich RFC aufzuzeigen und zu spezifizieren. 
+
+.ti 0
+Status of this Memo
+
+Dieses Memo orientiert sich an weiteren, typischen "Best Current Practice" RFC Verfassungen. 
+
+Dieses Produkt repraesentiert den Konsensus der IETF Gesellschaft. Es dient jedoch dem privaten Gebrauch und wird nicht veroeffentlicht.
+
+Es wurde geschrieben mithilfe des NroffEdit-Programmes, einem Java-Executable, welches frei erhaeltlich unter http://aaa-sec.com/nroffedit/ ist
+
+.ti 0
+Copyright and License Notice\" Boilerplate from December 2009
+
+Copyright (c) 2017 IETF Trust and the persons identified as the document authors. All rights reserved.
+
+This document is subject to BCP\078 and the IETF Trust's Legal Provisions Relating to IETF Documents \%(http://trustee.ietf.org/license-info) in effect on the date of publication of this document. Please review these documents carefully, as they describe your rights and restrictions with respect to this document. Code Components extracted from this document must include Simplified BSD License text as described in Section\04.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.
+.bp
+
+
+
+
+
+
+.\" \# TD5  -- Set TOC depth by altering this value (TD5 = depth 5)
+.\" \# TOC  -- Beginning of auto updated Table of Contents
+.in 0
+Table of Contents
+
+.nf
+   1  Einleitung  . . . . . . . . . . . . . . . . . . . . . . . . . .  3
+     1.1  Terminologie  . . . . . . . . . . . . . . . . . . . . . . .  3
+   2.  Schichtenmodellierung  . . . . . . . . . . . . . . . . . . . .  3
+     2.1 Authentifizierung der Kunden . . . . . . . . . . . . . . . .  3
+   3  Security Considerations . . . . . . . . . . . . . . . . . . . .  4
+   4  IANA Considerations . . . . . . . . . . . . . . . . . . . . . .  4
+   5  Referenzen  . . . . . . . . . . . . . . . . . . . . . . . . . .  4
+     5.1  Normative Verweise  . . . . . . . . . . . . . . . . . . . .  4
+     5.2  Informative Verweise  . . . . . . . . . . . . . . . . . . .  4
+   Danksagung . . . . . . . . . . . . . . . . . . . . . . . . . . . .  4
+   Kontakt  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  4
+.fi
+.in 3
+
+.\" \# ETC -- End of auto updated Table of Contents
+
+.bp
+.ti 0
+1  Einleitung
+
+Das Anwendungsschichtprotokoll zum Datenaustausch zwischen Geldautomat und Zentralcomputer einer Bank basiert auf dem TCP/IP-Standart.
+
+
+.ti 0
+1.1  Terminologie
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+"OPTIONAL" in this document are to be interpreted as described in
+BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+capitals, as shown here.
+
+Das Wort "Bank" gelte als Abbrevation von "Banksystem"
+
+"User"	Der Nutzer des Geldautomaten 
+.br
+
+"Klient"	Klient der jeweiligen Bank
+.br
+
+"ATM"	En.: der allgemeinnuetzige Geldautomat
+.br
+
+.ti 0
+2.  Schichtenmodellierung 
+
+Das Schichtenmodell zur optimalen Umsetzung des Datenaustausches zwischen Kunde und ATM sowie ATM zu Bank soll mithilfe des Application Layers, des Transport Layers, des Network layers als auch dem Datalink Layer und dem Physical Layer umgesetzt werden.
+Anhand mehrerer .pdfs soll sichergestellt werden, wie die Anwendungsumsetzung der Maschinellen Vorgaenge gestaltet werden, um Kommunikationen und Datentransfer sicher und effizient zu gestalten.
+
+.ti 0
+2.1 Authentifizierung der Kunden
+
+Siehe */ApplicationModel_Banking_FirstIteration.png
+.in 6
+.nf
+.\"Definitions and code {
+.\"  line 1
+.\"  line 2
+.\"}
+.fi
+.in 3
+
+.\" Directives (e.g .ti and .in) and escape sequences (\, \&, \%, \" and \0) are used to control
+.\" Formatting and are not displayed in the text document.
+.\"Special characters examples: 
+.\"The characters \0, \&, \%, \" are not shown in text.
+.\"However, the characters \\0, \\&, \\%, \\" are displayed.
+.\"
+.\" You can display these character sequences in the text document by
+.\" inserting the escape character '\'.
+
+.\" \&.ti 0  is displayed in text instead of used as a directive. 
+.br
+.\" \&.\\"  is displayed in document instead of being treated as a comment
+
+.\" C:\\dir\\subdir\\file.ext  Shows inclusion of backslash "\\".
+
+
+.bp
+.ti 0
+3  Security Considerations
+
+<Security considerations text>
+
+
+.ti 0
+4  IANA Considerations
+
+<IANA considerations text>
+
+
+.ti 0
+5  Referenzen
+
+.ti 0 
+5.1  Normative Verweise
+
+.in 14
+.\" \# REF  -- Managed reference list.
+[RFC8252] Denniss, W. and J. Bradley, "OAuth 2.0 for Native Apps", BCP 212, RFC 8252, DOI 10.17487/RFC8252, October 2017 (https://www.rfc-editor.org/info/rfc8252)
+.\" \# ERF -- End of managed reference list
+.\" ----------------------------------------
+.\" The reference list can be changed at any time by altering the RFC list in the line below the .\" \# REF directive
+.\" In order to execute any change, click on the 'Update All' button or select "Update 'Table of Contents' and References"
+.\" from the "Edit" menu or press <F3>.
+.\" NOTE: Managed reference list requires NroffEdit version 1.40 or later.
+
+.ti 0
+5.2  Informative Verweise
+
+.in 14
+.\" \# REF  -- Managed reference list.
+Alpen-Adria-Universität Klagenfurt (AAU), Faculty of Technical Sciences (TEWI) - Computer Networks and Network Programming (www.aau.at)
+.\" \# ERF -- End of managed reference list
+.in 3
+
+.ti 0
+Danksagung
+
+.in 6
+Die Authoren danken allen "Best Current Practice"-Verfassern der RFC-Gesellschaft.
+
+
+.ti 0
+Kontakt
+.sp
+.nf
+Auer T.
+myOrganisation
+myAdress
+myCountry
+Email: myEmal
+URI: myUri
+.sp
+Siljic M.
+thatOrganisation
+thatAdress
+thatCountry
+Phone: call-me-bb
+Email: thatEmail 
+.fi
+

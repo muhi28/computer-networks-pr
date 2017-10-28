@@ -51,8 +51,6 @@
 
     \includegraphics[width = \textwidth]{tcp_ip_model.png}
 
-    % TODO: Search for protocol examples
-
     \begin{enumerate}
 
         \item{Application Layer}\\\\
@@ -60,7 +58,62 @@
         Zu den ersten Protokollen der Verarbeitungsschicht zählen TELNET (für virtuelle Terminals),
         FTP (Dateitransfer) und SMTP (zur Übertragung von E-Mail).
         Im Laufe der Zeit kamen zu den etablierten Protokollen viele weitere Protokolle wie z.B.
-        DNS (Domain Name Service) und HTTP (Hypertext Transfer Protocol) hinzu.
+        DNS (Domain Name Service) und HTTP (Hypertext Transfer Protocol) hinzu.\\
+
+        \begin{addmargin}[1em]{1em}
+
+            Protokolle:
+            \begin{enumerate}
+
+                \item DNS (Domain Name System) - Umsetzung zwischen Domainnamen und IP-Adressen.\\
+
+                \item DoIP (Diagnostic over IP) - Transportprotokoll für Fahrzeugdiagnose.\\
+
+                \item FTP (File Transfer Protocol) - Dateitransfer.\\
+
+                \item HTTP (Hyper Text Transfer Protocol, WWW)\\
+
+                \item HTTPS - (Hyper Text Transfer Protocol Secure)\\
+
+                \item IMAP (Internet Message Access Protocol) - Zugriff auf E-Mails.\\
+
+                \item IPFIX (Internet Protocol Flow Information Export)\\
+
+                \item L2TP (Layer 2 Tunneling Protocol)\\
+
+                \item LLMNR (Link-local Multicast Name Resolution)\\
+
+                \item NDMP (Network Data Management Protocol)\\
+
+                \item MBS/IP (Multi-purpose Business Security over IP)\\
+
+                \item NNTP (Network News Transfer Protocol) - Diskussionsforen (Usenet)\\
+
+                \item NTP (Network Time Protocol)\\
+
+                \item POP3 (Post Office Protocol, Version 3) - E-Mail Abruf\\
+
+                \item RTP (Real-Time Transport Protocol)\\
+
+                \item SIP (Session Initiation Protocol) - Aufbau, Steuerung und Abbau von
+                Kommunikationssitzung (VoIP).\\
+
+                \item SNMP (Simple Network Management Protocol) - Verwaltung von Geräten im Netzwerk.\\
+
+                \item SMTP (Simple Mail Transfer Protocol) - E-Mail Versand.\\
+
+                \item SOCKS (Internet Sockets-Protokoll)\\
+
+                \item SSH (Secure Shell) - verschlüsselter REMOTE TERMINAL\\
+
+                \item Telnet - unverschlüsseltes Login auf entfernten Rechnern.\\
+
+                \item XMPP (Extensible Message and Presence Protocol)\\
+
+                \item Z39.50 - Abfrage von Informationssystemen\\
+
+            \end{enumerate}
+        \end{addmargin}
 
 
         \item Transport Layer:\\\\
@@ -82,9 +135,29 @@
 
                 UDP ist ein unzuverlässiges Protokoll, welches vorwiegend in Client/Server-
                 Umgebungen verwendet wird, in denen es in erster Linie nicht um eine sehr genaue,
-                sondern schnelle Datenübertragung geht.\\
+                sondern schnelle Datenübertragung geht.\\\\
 
             \end{addmargin}
+
+            Protokolle:
+            \begin{enumerate}
+
+                \item TCP (Transmission Control Protocol) - Übertragung von Datenströmen
+                (verbindungsorientiert, zuverlässig).\\
+
+                \item UDP (User Datagram Protocol) - Übertragung von Datenpaketen
+                (verbindungslos, unzuverlässig, geringer Overhead).\\
+
+                \item SCTP (Stream Control Transmission Protocol) - Transportprotokoll.\\
+
+                \item TLS (Transport Layer Security) - Erweiterung von TCP um Verschlüsselung.\\
+
+                \item DTLS (Datagram Transport Layer Security) - Auf TLS basierendes
+                Verschlüsselungsprotokoll, das auch über zustandslose Protokolle wie UDP
+                übertragen werden kann.\\
+
+            \end{enumerate}
+
         \end{addmargin}
 
         \item Internet Layer:\\\\
@@ -94,6 +167,33 @@
         ist fester Bestandteil jedes IP-Implementierung und dient zur Übertragung von Diagnose- und
         Fehlerinformation für das Internet Protocol.\\
 
+        \begin{addmargin}[1em]{1em}
+            Protokolle:\\
+
+            \begin{enumerate}
+
+                \item IP (Internet Protocol) - Datenpalet-Übertragung (verbindungslos)\\
+
+                \item IPsec (Internet Protocol Security) - Sichere Datenpaket-Übertragung (verbindungslos)\\
+
+                \item ICMP (Internet Control Message Protocol) - Kontrollnachrichten (zum Beispiel Fehlermeldungen),
+                Teil jeder IP-Implementierung\\
+
+                \item IGRP (Interior Gateway Routin Protocol) - Informationsaustausch zwischen Routern (Distanzvektor)
+                (veraltet - ersetzt durch EIGRP)\\
+
+                \item OSPF (Open Shortes Path First) - Informationsaustausch zwischen Routern (Linkzustand) via IP\\
+
+                \item BGP (Border Gateway Protocol) - Informationsaustausch zwischen autonomen Systemen im Internet via TCP\\
+
+                \item RIP (Routing Information Protocol) - Informationsaustausch zwischen Routern vid UDP\\
+
+                \item IGMP (Internet Group Management) - Organisation von Multicast-Gruppen, Bestandteil von IP auf allen Hosts,
+                die den Empfang von IP-Multicast unterstützen\\
+
+            \end{enumerate}
+        \end{addmargin}
+
         \item Network Layer:\\\\
         Unterhalbe der Internetschicht befindet sich i TCP/IP-Modell eine gro0e Definitionslücke.
         Das Referenzmodell sagt auf dieser Ebene nicht viel aus, was hier passieren soll. Festgelegt ist
@@ -101,6 +201,33 @@
         geschlossen werden muss. Dieses Protokoll ist im TCP/IP-Modell nicht weiter definiert und weicht
         von Netz zu Netz und Host zu Host ab. Dieses Modell macht an dieser Stelle vielmehr Gebrauch von
         bereits vorhandenen PRotokollen, wie z.B. Ethernet (IEE 802.3), Serial Line IP(SLIP), etc.\\
+
+
+        \begin{addmargin}[1em]{1em}
+            Protokolle:\\
+
+            \begin{enumerate}
+
+                \item Ethernet mit CSMA/CD - Netzwerkstandard IEEE 802.3\\
+
+                \item WLAN - Netzwerkstandard IEEE 802.11\\
+
+                \item PPP - Point-to-Point Protokoll\\
+
+                \item Token Bus - Netzwerkstandard IEEE 802.4\\
+
+                \item Token Ring - Netzwerkstandard IEEE 802.5\\
+
+                \item FDDI - Fiber Distributed Data Interface\\
+
+                \item ARP ( Adress Resolution Protocol) - Adressumsetzung zwischen IP- und Geräteadressen (MAC)\\
+
+                \item RARP ( REverse Adress Resolution Protocol) - Adressumsetzung zwischen Geräte- (MAC) und IP-Adressen
+                (veraltet - wird durch BOOTP ersetzt)\\\\
+
+            \end{enumerate}
+
+        \end{addmargin}
     \end{enumerate}
 
     TCP Three-Way-Handshake:

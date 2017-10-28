@@ -8,10 +8,62 @@
 
 % Packages
 \usepackage{a4wide}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{scrextend}      % Intending
+\usepackage{graphicx}
 
 % Document
 \begin{document}
 
+    \section{TCP vs. UDP}
+
+    Wie im OSI-Modell ermöglicht die Transportschicht die Kommunikation
+    zwischen den Quell- und Zielhosts. Auf dieser Schicht wurden zwei
+    Ende-zu-Ende-Protokolle definiert:\\
+
+    - Transport Control Protocol (TCP)\\
+
+    - User Datagram Protocol (UDP)\\
 
 
+    \begin{enumerate}
+
+        \item User Datagram Protocol:\\
+        \begin{addmargin}[1em]{1em}
+
+            Ist ein sogenannter Datagramm-Dienst, bei dem ledigliche
+            Datenpakete verschickt werden. Hierbei muss sich das
+            Applikationsprotokoll um Dinge wie Fehlerbehandlung, Quittierung kümmern.
+
+        \end{addmargin}
+
+        \item Transport Control Protocol:\\
+
+        \begin{addmargin}[1em]{1em}
+
+            TCP ist dagegen ein gesichertes, verbindungsorientiertes Protokoll:
+            man öffnet zuerst eine "Verbindung" über das dann die Daten übertragen
+            werden. Hierbei wird garantiert, dass die Daten vollständig, unverfälscht
+            und in der richtigen Reihenfolge ankommen.
+            Außerdem funktioniert diese Verbindung in beide Richtungen.
+            Anders als bei UDP kann man damt z.B. "Anfragen und Antworten" leicht zuordnen,
+            weil sie über dieselbe Verbindung geschickt werden.\\
+
+        \end{addmargin}
+    \end{enumerate}
+
+    Anwendungsprotokolle:\\\\
+
+    \begin{addmargin}[1em]{1em}
+        \begin{enumerate}
+
+            \item DNS\\
+            \item Internet Control Message Protocol (ICMP)\\
+            \item Telnet\\
+            \item File Transfer Protocol (FTP, TFTP)\\
+            \item HTTP\\
+
+        \end{enumerate}
+    \end{addmargin}
 \end{document}

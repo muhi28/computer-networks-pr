@@ -14,7 +14,7 @@
 % Document
 \begin{document}
     \section{Internetarchitekturen}
-    Die allgemeine Architektur des Internets ist gegeben durch die Vernetzung der
+    Die allgemeine Architektur des Internets ist gegeben durch die Vernetzung von
     Systeme auf unterschiedlichen Ebenen.  Nutzer können über Internet Exchange Points
     ("Internetknoten", IX or IXP, auch Network Access Point) verschiedenste Daten
     austauschen und generell werden diese von Providern (ISPs) zur Nutzung dargeboten.
@@ -27,7 +27,6 @@
     berechnen sich pro genutzten Port per eigenen IXP. Die Kosten für den jeweiligen Port sind
     abhängig von dessen Transferrate - derzeit zwischen 10Mbps und 100 Gbps.\\
 
-
     \noindent Bei den einzelnen ISPs unterscheidet man zwischen mehreren Kategorien (Tiers):
     \begin{itemize}
     \item Tier 1.: National \& oftmals International, die größten Betreiber. \\
@@ -39,6 +38,23 @@
     \noindent Es bleibt jedoch zu beachten dass die Kategorisierung regelrecht schwammig geführt wird.\\
 
     \noindent Weiters ist das Internet noch durch Protokolle unterstützt, um fehlerfreien Austausch
-    zu garantieren, oft beschrieben mithilfe des ISO/OSI-Referenzmodells (siehe 2.3).
+    zu garantieren, oft beschrieben mithilfe des ISO/OSI-Referenzmodells (siehe 2.3).\\
+
+    Mit den IX im Vordergrund, stehen im Hintergrund mehrere angewandte Techniken:\\
+    - \emph{Verbindungsklassen}:
+    \begin{enumerate}
+        \item[$\diamond$] Point-to-Point: Ein Computer zum nächsten
+        \item[$\diamond$] Multi-Point: Mehrere Computer an einem Subnetwork
+        \item[$\diamond$] Switched Networks: Viele Computer in einem Network
+        \item[$\diamond$] Interconnected Networks: Mehrere Networks zusammen
+    \end{enumerate}
+    - \emph{Verbindungstypen}:
+    \begin{enumerate}
+        \item[$\diamond$] Simplex: Übertragung in eine Richtung
+        \item[$\diamond$] Half-Duplex: Übertragung von 2 Seiten bei asynchroner Übertragung
+        \item[$\diamond$] Duplex: Übertragung von 2 Seiten bei synchroner Übertragung
+    \end{enumerate}
+
+
 
 \end{document}

@@ -3,7 +3,7 @@
 
 
 Rechnernetze RFC-Taskforce                                     A. Thomas
-Request for Comments: 10000                                  S. Muhamed
+Request for Comments: 10000                                  S. Muhammed
 Category: RFC Practice                                     Streifenmafia
 Expires: 31/10/2016                                           28/10/2017
 

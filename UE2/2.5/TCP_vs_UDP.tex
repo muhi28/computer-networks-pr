@@ -12,6 +12,7 @@
 \usepackage[ngerman]{babel}
 \usepackage{scrextend}      % Intending
 \usepackage{graphicx}
+\usepackage{enumerate}
 
 % Document
 \begin{document}
@@ -21,27 +22,18 @@
     Wie im OSI-Modell ermöglicht die Transportschicht die Kommunikation
     zwischen den Quell- und Zielhosts. Auf dieser Schicht wurden zwei
     Ende-zu-Ende-Protokolle definiert:\\
-
     - Transport Control Protocol (TCP)\\
-
     - User Datagram Protocol (UDP)\\
 
-
     \begin{enumerate}
-
-        \item \emph{User Datagram Protocol:}\\
+        \item \emph{User Datagram Protocol:}
         \begin{addmargin}[1em]{1em}
-
             Ist ein sogenannter Datagramm-Dienst, bei dem ledigliche
             Datenpakete verschickt werden. Hierbei muss sich das
             Applikationsprotokoll um Dinge wie Fehlerbehandlung, Quittierung kümmern.
-
         \end{addmargin}
-
-        \item \emph{Transport Control Protocol:}\\
-
+        \item \emph{Transport Control Protocol:}
         \begin{addmargin}[1em]{1em}
-
             TCP ist dagegen ein gesichertes, verbindungsorientiertes Protokoll:
             man öffnet zuerst eine "Verbindung" über das dann die Daten übertragen
             werden. Hierbei wird garantiert, dass die Daten vollständig, unverfälscht
@@ -53,17 +45,14 @@
         \end{addmargin}
     \end{enumerate}
 
-    \emph{Anwendungsprotokolle:}\\\\
-
+    Die Anwendungsprotokolle sind grundsätzlich für beide Arten dieselben.
     \begin{addmargin}[1em]{1em}
-        \begin{enumerate}
-
-            \item DNS\\
-            \item Internet Control Message Protocol (ICMP)\\
-            \item Telnet\\
-            \item File Transfer Protocol (FTP, TFTP)\\
-            \item HTTP\\
-
+        \begin{enumerate}[$\diamond$]
+            \item DNS - Domain Name Service
+            \item Internet Control Message Protocol (ICMP)
+            \item Telnet
+            \item File Transfer Protocol (FTP, TFTP)
+            \item HTTP
         \end{enumerate}
     \end{addmargin}
 \end{document}

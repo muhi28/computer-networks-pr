@@ -12,6 +12,7 @@
 \usepackage[ngerman]{babel}
 \usepackage{scrextend}      % Intending
 \usepackage{graphicx}
+\usepackage{enumerate}      % Fancy listing
 
 % Document
 \begin{document}
@@ -61,10 +62,21 @@
     \subsubsection{802.11 Ad Hoc Modus}
     \begin{minipage}{0.7\textwidth}     % Leftside :: Text using 70% of standard textwidth
         Der Ad Hoc Modus beschreibt die direkte Verbindung mehrerer STAs ohne Zwischenstationen.
+        Es verläuft also ein direkter Datenverkehr zwischen mehreren Medien.
     \end{minipage}
     \begin{minipage}{0.3\textwidth}     % Rightside :: Picture using 30% of standard textwidth
         \includegraphics[width=\linewidth]{802-11_AdHoc.png}
     \end{minipage}
 
+    \subsection{Protokolle}
+    \begin{enumerate}[$\diamond$]
+        \item 802.11: IEEE Norm; spezifiziert Physical Layer \& MAC
+        \item 802.1X: IEEE Norm; definiert Port-basierte Zugangskontrolle
+        \item EAPOL: Extensible Authentication protocol over Lan: Point-to-Point-Protocol für LANs
+        \item WEP: Wired Equivalent Privacy: Dekryption zwischen WLan Nodes.
+        \item WPA: Wi-Fi Protected Access: Data Enkryption \& Netzwerkauthentifizierung
+    \end{enumerate}
+
+    \subsubsection{802.11 Protokoll}
 
 \end{document}

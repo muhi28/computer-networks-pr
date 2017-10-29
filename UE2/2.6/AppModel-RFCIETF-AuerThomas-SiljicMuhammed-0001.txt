@@ -161,7 +161,7 @@ RFC 10000                Schichtenmodellierung              Oktober 2017
 
    Siehe */ApplicationModel_Banking_FirstIteration.png
    Das Sequenzdiagramm soll klarstellen wie der Datenfluss beginnt,
-   sobald ein Kunde die Karte in den ATM steckt. In dem Moment, als die
+   sobald ein Kunde die Karte in den ATM steckt. In dem Moment, als ATM-
  
 
 
@@ -170,14 +170,14 @@ Auer & Siljic	.               RFC-Training                             3
 RFC 10000                Schichtenmodellierung              Oktober 2017
 
 
-   IBAN verifiziert wird, beginnt der Datenfluss seitens des ATM. Er
-   versetzt Daten in binaere Form und sendet diese via Sublayer in das
-   entsprechende Netzwerk. Gibt es waehrend dieses Datentransfers einen
-   Fehler, so wird via TCP-Protokoll eine Fehlernachricht
-   zurueckgeschickt. Sobald das Bankingsystem diesen Request bekommt und
-   bearbeitet, wird gesendet ob die Authentifzierung erfolgreich war
-   oder nicht. Bei Erfolg, sendet das System Kundendaten zurueck, um
-   weitere Schritte zu verkuerzen.
+   interner die IBAN verifiziert wird, beginnt der Datenfluss seitens
+   des ATM. Er versetzt Daten in binaere Form und sendet diese via
+   Sublayer in das entsprechende Netzwerk. Sobald das Bankingsystem
+   diesen Request bekommt und bearbeitet, wird gesendet ob die
+   Authentifzierung erfolgreich war oder nicht. Gibt es waehrend dieses
+   Datentransfers einen Fehler, so wird gemaess TCP-Protokoll eine
+   Fehlernachricht zurueckgesendet. Bei Erfolg, sendet das System
+   Kundendaten zurueck, um weitere Schritte zu verkuerzen.
 
 
 2.2. Aktion des Kunden
@@ -188,9 +188,10 @@ RFC 10000                Schichtenmodellierung              Oktober 2017
    bekommt jener die Option eine Aktion zu waehlen. Je nach Aktion
    werden unterschiedliche Funktionen innerhalb des ATM aufgerufen. Bei
    weniger kritischen Aktionen wie 'Kontoauszug' kann der Kunde ohne
-   weitere Eingabe von Daten direkten Output erwarten, bei erneutem
-   Austausch zwischen ATM und Banksystem um die Kreditibilitaet zu
-   wahren.
+   weitere Eingabe von Daten direkten Output erwarten, andernfalls
+   braucht es einen erneuten Austausch zwischen ATM und Banksystem um
+   die Kreditibilitaet zu wahren. Im Zuge der Interaktion muss die
+   genutzte Kreditkarte weiterhin im ATM verweilen.
 
    Bei Geldauszuegen oder -einzuegen muss der Kunde erneut seine
    Identitaet mittels PIN-Code bestaetigen, welcher jedoch im ATM
@@ -217,7 +218,6 @@ RFC 10000                Schichtenmodellierung              Oktober 2017
 3  Sicherheitmassnahmen
 
    Um gegen Betrug und unlautere Mittel vorzugehen, benoetigt es einiger
-   Vorkehrungen.
  
 
 
@@ -225,6 +225,8 @@ Auer & Siljic	.               RFC-Training                             4
 
 RFC 10000                Schichtenmodellierung              Oktober 2017
 
+
+   Vorkehrungen.
 
 3.1. Wahrung der Kundendaten
 
@@ -270,8 +272,6 @@ RFC 10000                Schichtenmodellierung              Oktober 2017
               Alpen-Adria-Universitaet Klagenfurt (AAU), Faculty of
               Technical Sciences (TEWI) - Computer Networks and Network
               Programming (www.aau.at)
-
-
 
 
  

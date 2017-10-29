@@ -126,9 +126,9 @@ Anhand mehrerer .pdfs soll sichergestellt werden, wie die Anwendungsumsetzung de
 Siehe */ApplicationModel_Banking_FirstIteration.png
 .br
 Das Sequenzdiagramm soll klarstellen wie der Datenfluss beginnt, sobald ein Kunde die Karte in den ATM steckt.
-In dem Moment, als die IBAN verifiziert wird, beginnt der Datenfluss seitens des ATM. Er versetzt Daten in binaere Form und sendet diese via Sublayer in das entsprechende Netzwerk.
-Gibt es waehrend dieses Datentransfers einen Fehler, so wird via TCP-Protokoll eine Fehlernachricht zurueckgeschickt.
+In dem Moment, als ATM-interner die IBAN verifiziert wird, beginnt der Datenfluss seitens des ATM. Er versetzt Daten in binaere Form und sendet diese via Sublayer in das entsprechende Netzwerk.
 Sobald das Bankingsystem diesen Request bekommt und bearbeitet, wird gesendet ob die Authentifzierung erfolgreich war oder nicht.
+Gibt es waehrend dieses Datentransfers einen Fehler, so wird gemaess TCP-Protokoll eine Fehlernachricht zurueckgesendet.
 Bei Erfolg, sendet das System Kundendaten zurueck, um weitere Schritte zu verkuerzen.
 
 
@@ -137,7 +137,8 @@ Bei Erfolg, sendet das System Kundendaten zurueck, um weitere Schritte zu verkue
 
 Siehe */ApplicationModel_Banking_SecondIteration.png
 
-Nachdem der Kunde die Bestaetigung der Authentifizierung erhaelt, bekommt jener die Option eine Aktion zu waehlen. Je nach Aktion werden unterschiedliche Funktionen innerhalb des ATM aufgerufen. Bei weniger kritischen Aktionen wie 'Kontoauszug' kann der Kunde ohne weitere Eingabe von Daten direkten Output erwarten, bei erneutem Austausch zwischen ATM und Banksystem um die Kreditibilitaet zu wahren.
+Nachdem der Kunde die Bestaetigung der Authentifizierung erhaelt, bekommt jener die Option eine Aktion zu waehlen. Je nach Aktion werden unterschiedliche Funktionen innerhalb des ATM aufgerufen. Bei weniger kritischen Aktionen wie 'Kontoauszug' kann der Kunde ohne weitere Eingabe von Daten direkten Output erwarten, andernfalls braucht es einen erneuten Austausch zwischen ATM und Banksystem um die Kreditibilitaet zu wahren.
+Im Zuge der Interaktion muss die genutzte Kreditkarte weiterhin im ATM verweilen.
 
 Bei Geldauszuegen oder -einzuegen muss der Kunde erneut seine Identitaet mittels PIN-Code bestaetigen, welcher jedoch im ATM vorliegt. Ist der PIN falsch, so wird die Aktion abgebrochen und bei dreimaliger falscher Eingabe wird das Konto voruebergehend gesperrt. Ist der PIN richtig, so werden Daten erneut aus dem System erhoben, um den Kunden ueber seinen Kontostand zu informieren. Sollte der Kunde einen Wert ueber dem gegenwaertigen Kontostand erheben, so blockt der ATM diese Transaktion zum Wohle des Kunden ab. Andernfalls gibt der ATM den Betrag in X-Euro Scheinen aus und beendet die Interaktion.
 

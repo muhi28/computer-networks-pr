@@ -1,0 +1,39 @@
+Kunde->ATM: Beginne Interaktion
+
+ATM->Banksystem: Authentifiziere...
+Banksystem->ATM: Verifiziere\nSende Kundendaten
+opt Erfolgreich
+    ATM->Kunde: Erfolgreich, wähle Aktion
+
+alt
+    Kunde->ATM: Geldauszug
+    ATM->Kunde: Gebe PIN ein
+alt
+    Kunde->ATM: Pineingabe        
+loop 3x
+    ATM->Kunde: Falscher Pin
+end
+else
+    ATM->Kunde: Richtiger Pin\n Wähle Geldbetrag
+    Kunde->ATM: Dateneingabe
+    
+alt
+    ATM->Kunde: Zu hoher Geldbetrag: Abbruch        
+else
+    ATM-->Kunde: Verifiziere
+    ATM->Banksystem: Kunde X will Y €
+    Banksystem->Banksystem: Override Databank
+    Banksystem->ATM: Bestätigt, Zahle aus
+    
+    ATM->ATM: Ausgabeprotokoll: Karte dann Geld
+    ATM-->Kunde: Kartenauswurf
+    ATM-->Kunde: Geldauswurf
+    ATM->Banksystem: Kunde logged out
+    ATM->ATM: Kundenabmeldung\nDatenverwurf
+end
+end
+end
+
+else other...
+ATM->Kunde: Fehlschlag, versuche nochmal;\nKartenauswurf
+end

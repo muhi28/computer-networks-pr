@@ -1,39 +1,20 @@
-Kunde->ATM: Beginne Interaktion
+# Real Sequencediagram
+Hello ->
+Hello <-
 
-ATM->Banksystem: Authentifiziere...
-Banksystem->ATM: Verifiziere\nSende Kundendaten
-opt Erfolgreich
-    ATM->Kunde: Erfolgreich, wähle Aktion
+Check Kartendaten ->
+01 Valid <-
 
-alt
-    Kunde->ATM: Geldauszug
-    ATM->Kunde: Gebe PIN ein
-alt
-    Kunde->ATM: Pineingabe        
-loop 3x
-    ATM->Kunde: Falscher Pin
-end
-else
-    ATM->Kunde: Richtiger Pin\n Wähle Geldbetrag
-    Kunde->ATM: Dateneingabe
-    
-alt
-    ATM->Kunde: Zu hoher Geldbetrag: Abbruch        
-else
-    ATM-->Kunde: Verifiziere
-    ATM->Banksystem: Kunde X will Y €
-    Banksystem->Banksystem: Override Databank
-    Banksystem->ATM: Bestätigt, Zahle aus
-    
-    ATM->ATM: Ausgabeprotokoll: Karte dann Geld
-    ATM-->Kunde: Kartenauswurf
-    ATM-->Kunde: Geldauswurf
-    ATM->Banksystem: Kunde logged out
-    ATM->ATM: Kundenabmeldung\nDatenverwurf
-end
-end
-end
+Pin <pin> ->
+02 Succeed <-
 
-else other...
-ATM->Kunde: Fehlschlag, versuche nochmal;\nKartenauswurf
-end
+Get Balance ->
+03 1500,25 EUR <-
+Withdraw possible 500 ->
+
+04 Covered <-
+Withdraw 500 ->
+
+05 Done <-
+Bye ->
+Closed <-

@@ -1,0 +1,100 @@
+%%
+%% Author: thompson
+%% 01.11.17
+%%
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{a4wide}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+\usepackage{enumerate}
+\usepackage{scrextend}
+
+% Document
+\begin{document}
+    \section{Protokolle der Anwendungsschicht}
+    Konsultieren Sie sogenannte RFCs der IETF (erklären Sie die Bedeutung dieser
+    Abkürzungen) um folgende Fragestellungen zu beantworten:
+
+    \begin{enumerate}[\thesection .1]
+    \item Beschreiben Sie die folgenden Protokolle hinsichtlich ihrer Eigenschaften und
+wesentlichen Unterschiede: HTTP/0.9, HTTP/1.0, HTTP/1.1, HTTP/2.0.
+
+    \begin{enumerate}[$\diamond$]
+        \item \textbf{HTTP/0.9} :: Erstellt 1991.\\ Es ist ein Subset des vollen HTTP-Protokolls, wie wir es heute kennen.\\
+        Merkmale:
+        \begin{addmargin}[1em]{1em}
+            \begin{enumerate}
+                \item Kein Austausch von Klientenprofil.
+                \item Einfachheit Request/Response-Model
+                \item Keine Sessions oder States
+                \item Weitverbreitete Nutzung: Request of Data through Browser
+                \item Nutzt telnet-Protokolstil via TCP-IP\\
+            \end{enumerate}
+        \end{addmargin}
+
+        \underline{Beispiel: Verbindungsaufbau}\\
+        Der Klient erstellt eine TCP-IP Verbindung zu einem Host via Domänname oder IP und Port-Nummer.
+        Wird kein Port definiert, so wird der default-Wert 80 gesetzt.
+        Der Server akzeptiert die Verbinung und Datentransfer kann stattfinden.
+    \begin{addmargin}[1em]{1em}
+        \emph{telnet mailsrv.aau.at 25} ... verbindung zum Mailserver der AAU auf Port 25\\
+    \end{addmargin}
+
+        \underline{Beispiel: Request \& Response}\\
+        Ein HTTP-Request wird an einen Server gestellt.
+        \begin{addmargin}[1em]{1em}
+            \emph{"GET http://www.uni-klu.ac.at:80/myapp/index.html"}
+        \end{addmargin}
+        Der Server überprüft diese Anfrage.
+        \begin{addmargin}[1em]{1em}
+            Gibt es dieses Dokument?\\
+            Darf der User darauf zugreifen?\\
+            Ist es ein dynamisch generiertes Dokument?\\
+            Ist das GET-Format richtig? ... u.s.w.
+        \end{addmargin}
+        Der Server sendet anschließend eine Nachricht zurück zum Anfragensteller.\\
+        \footnote[1 Vgl.: HTTP-Statuscodes]{Siehe https://de.wikipedia.org/wiki/HTTP-Statuscode}
+        \begin{addmargin}[1em]{1em}
+            Information - 100++: Continue, Switching Protocols, Processing\\
+            Erfolgreich - 200++: OK, Accepted, Non-Authoritative Information,...\\
+            Umleitungen - 300++: Moved permanently, See other, Use Proxy, ...\\
+            Client-Fehler - 400++: Bad Request, Unauthorized, Forbidden, Not Found, ...\\
+            Server-Fehler - 500++: Internal Server Error, Bad Gateway, Service N/A,...
+        \end{addmargin}
+        Der Browser des Anfragenstellers erhält das Dokument und rendert gemäß .css/.php/... .
+        Bei vollständiger Übertragung des abgerufenen Protokolls unterbricht der Server die Verbindung zum Klienten.\\
+
+        \item \textbf{HTTP/1.0} :: Erweitert um 1996
+        Spezifiziert im RFC 1945. Dies erweitert das HTTP/0.9 Protokoll um weitere TCP-IP Verbindungen für multiplen Datentransfer.
+        Dadurch werden neben Texten des eigentlichen Dokuments eingebettete Bilder, anhand deren Domäne, geladen.\\
+        Eine Website welche 5 Bilder beinhaltet besitzt somit 6 Separate TCP-Verbindungen:
+        \begin{addmargin}[1em]{1em}
+            - 1. Verbindung: Text\\
+            - 2. Verbindung: Bild 1\\
+            - 3. Verbindung: Bild 2\\
+            - ...\\
+            - 6. Verbindung: Bild 5\\
+        \end{addmargin}
+
+        \item HTTP/1.1
+        \item HTTP/2.0
+
+        %%% Sources:
+        % https://www.w3.org/Protocols/HTTP/AsImplemented.html
+        % WebTech-VO-Unterlagen, 2nd.pdf
+        % https://www.thomas-krenn.com/de/wiki/TCP_Port_80_(http)_Zugriff_mit_telnet_%C3%BCberpr%C3%BCfen
+
+    \end{enumerate}
+
+    \item Beschreiben Sie die folgenden Protokolle und wie sie benutzt werden: SMTP,
+POP3, IMAP. Geben Sie ein konkretes Beispiel für SMTP an und demonstrieren
+Sie dies mit Hilfe von telnet und mailsrv.uni-klu.ac.at.
+    \item Beschreiben Sie das DNS-Protokoll.
+\end{enumerate}
+
+\end{document}

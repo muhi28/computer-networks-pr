@@ -1,0 +1,32 @@
+%%
+%% Author: thompson
+%% 03.11.17
+%%
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{a4wide}
+
+% Document
+\begin{document}
+    \section{Analyse mit Wireshark}
+    Nun werden wir heutigen Datenverkehr aufnehmen und analysieren. Via Youtube catchen wir
+    einige Datenpackete welche wir anschließend begutachten, gemäß folgender Fragen:
+
+    \begin{enumerate}
+        \item Versuchen Sie die Verbindung über unterschiedliche Zugangsnetzwerke (z.B. LAN, WLAN, 3/4G sofern möglich) herzustellen und dokumentieren Sie allfällige Unterschiede.
+
+        \item Welche Objekte werden vom Client via HTTP angefordert? Hinweis: nur jene beim Videostreaming, andere Objekte (z.B. HTML, Text, Bilder) können vernachlässigt werden.
+            Wir setzen Wireshark auf unser Netzwerk an und starten  den Stream.
+            Wir beenden die Aufnahme alsbald und analysieren unser .pcapng mithilfe von
+        \begin{verbatim}
+            - Analyze > Follow > TCP Stream / UDP Stream
+            - Statistics > Conversations
+            - ...
+        \end{verbatim}
+        % // TODO for another day. Odd internetconnectability right now.
+
+    \end{enumerate}
+\end{document}

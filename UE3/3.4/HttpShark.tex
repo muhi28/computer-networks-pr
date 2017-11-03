@@ -28,6 +28,7 @@
         \end{verbatim}
         kann man direkt einsehen, welche Elemente im Rahmen aller HTTP-Protokollierten Frames, innerhalb des derzeitig geladenen .pcap übertragen wurden.
         In unserem dump\_http.pcap wurden die Elemente text(145 Byte, Frame 6), logo.gif(4445 Byte, Frame 22) und TechnikErleben.png(27 kB, Frame 66) angefordert, von 192.168.1.10.
+
         \item Recherchieren Sie die Bedeutung der einzelnen Header-Felder bei den Anfragen bzw. Antworten des Servers.
         TCP-Header bestimmen eine ganze Reihe an diversen Datensätzen. Über 10 Felder von je 20 bytes \& zusätzlichen 40 byte
         an optionalen, informativen Daten, bestimmt man\\\\
@@ -107,16 +108,52 @@
             dieser weitere Packete des jeweiligen Elementes senden darf.
         \end{addmargin}
 
-        $\diamond$ TCP checksum (2 Byte)
+        $\diamond$ TCP checksum\footnote[1]{http://www.roman10.net/2011/11/27/how-to-calculate-iptcpudp-checksumpart-1-theory/} (2 Byte)
         \begin{addmargin}[1em]{1em}
             Die Prüfsumme des TCP-Headers dient der Erkennung von Fehlübertragungen, bestehend aus Empfänger-IP,
             Sender-IP, TCP-Protokollerkennung, Länge des TCP-Headers und Nutzdaten.
-
+            % // TODO: Add the stuff from link in Footnote into this margin
         \end{addmargin}
 
-        \item Wie viele TCP-Verbindungen werden insgesamt aufgebaut? Wie unterscheidet sich das von dump\_protocols.pcap?
-        Mithilfe des Filters \textbf{'tcp \&\& !http'} können wir insgesamt 68 TCP-Frames feststellen.
-        \item Bestimmen Sie, wie viele Bytes in jeder Verbindung ausgetauscht werden und wie lange die einzelnen Verbindungen bestehen.
-    \end{enumerate}
+        $\diamond$ Urgent Pointer (2 Byte)
+        \begin{addmargin}[1em]{1em}
+            Der Urgent-Pointer zeigt auf das Ende der dringenden Daten. Der Wert des Pointers ist ein positiver Offset der Sequenznummer.
+            Gilt nur wenn die URG-Flag gesetzt ist.
+        \end{addmargin}
 
+        $\diamond$ Options (0 .. 40 Byte)
+        \begin{addmargin}[1em]{1em}
+            Das Options-Feld ist immer unterschiedlich groß, je nach Zusatzinformationen.
+            Eine Option muss stets die RFC-Bedingung von 8 Bit erfüllen, dementsprechend muss man potenzielle Optionswerte
+            mit Nullwerten padden.
+            Man kann beispielsweise die Maximum Segment Size, MSS, beeinflussen. Per Default ist dieser:
+            IP Datagram mit 576 Byte - 40 Byte TCP Header = 536 Byte.
+        \end{addmargin}
+
+        \includegraphics[width=\textwidth]{TCP-Headerfield.png}
+
+        Dementsprechen lassen sich dann die Antworten und Nachfragen des Servers interpretieren.
+
+\pagebreak
+        \item Wie viele TCP-Verbindungen werden insgesamt aufgebaut? Wie unterscheidet sich das von dump\_protocols.pcap?\\
+        Mithilfe von
+        \begin{verbatim}
+            Analyze > Follow > TCP Stream
+        \end{verbatim}
+        können wir durch die verschiedenen TCP-Verbindungen tooglen. Im Rahmen dessen können wir auch einsehen, was genau übertragen wurde.\\
+        Für unser .pcap stehen 3 unterschiedliche TCP-Verbindungen.
+        \begin{addmargin}[1em]{1em}
+            $\circ$ Stream 0: Beschreibt GET /test/
+            $\circ$ Stream 1: Beschreibt GET /test/logo.gif
+            $\circ$ Stream 2: Beschreibt GET /test/TechnikErleben.png
+        \end{addmargin}
+        Es handelt sich dabei um eine altbewährte Form der HTTP/1.0 Datenübertragung - 1 eigene TCP-Verbindung per Grafik.
+
+        \item Bestimmen Sie, wie viele Bytes in jeder Verbindung ausgetauscht werden und wie lange die einzelnen Verbindungen bestehen.
+        Via
+        \begin{verbatim}
+            Statistics > Conversations ... TCP
+        \end{verbatim}
+        können wir alles rund um die TCP-Verbindungen feststellen.
+    \end{enumerate}
 \end{document}

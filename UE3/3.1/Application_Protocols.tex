@@ -188,9 +188,25 @@ Sie dies mit Hilfe von telnet und mailsrv.uni-klu.ac.at.
         während Opera oder Apple Mail lediglich ein vereinfachtes IMAP-Protokoll implementieren.
         Viele Webserver-Anbieter unterdrücken die Unterstützung von IMAP, aufgrund der serverbasierten Speicherung.\\
     \end{enumerate}
-    \emph{Beispiel: SMTP Example}
-
+    \emph{Beispiel: SMTP Example}\\
     \includegraphics[height=\pagetotal]{TelnetSample.png}
+
+    Alternativ:
+    \begin{verbatim}
+        telnet -z ssl smtp.gmail.com 465
+        HELO
+        AUTH LOGIN
+        Enter mail-adress in Base64
+        Enter Password in Base64
+        if Accepted:
+        MAIL TO: <mail.com>
+        MAIL FROM: <mail.com>
+        DATA
+        Subect: xy
+        asdasd
+        .
+        QUIT
+    \end{verbatim}
 
     \item Beschreiben Sie das DNS-Protokoll.\\
         Das Domain Name System-Protokoll beschreibt alles rund um das Mapping von IP-Adressen auf Domännamen.

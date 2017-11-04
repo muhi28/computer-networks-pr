@@ -28,10 +28,13 @@
             Wir setzen Wireshark auf unser Netzwerk an und starten  den Stream.
             Wir beenden die Aufnahme alsbald und analysieren unsere .pcapng's mithilfe von
         \begin{verbatim}
-            - Analyze > Follow > TCP Stream / UDP Stream
-            - Statistics > Conversations
-            - Filter wie 'tcp.ack == 1 && tcp.seq == 1'
-            - u.s.w.
+            https://www.wireshark.org/tools/wpa-psk.html
+            Passphrase: PW
+            SSID: Network
+                -> Generate PSK
+            Initiate WEP-Decryption
+            > Edit > Preferences > Protocols ... IEEE 802.11: Enable Decryption
+             ... Decryption Keys Edit > Add: WEP > Add PSK in empty ""
         \end{verbatim}
         \begin{enumerate}[\thesection .1]
             \item Stream eines Youtube-Videos via Ethernetverbindung\\

@@ -33,6 +33,25 @@
         TCP-Header bestimmen eine ganze Reihe an diversen Datensätzen. Über 10 Felder von je 20 bytes \& zusätzlichen 40 byte
         an optionalen, informativen Daten, bestimmt man\\\\
 
+        \textbf{Header des HTTP-Protokolls}\\
+        Prinzipiell sind die einzelnen HTTP-header ziemlich selbsterklärend. Dennoch für einen kurzen Überblick:\\
+        Header bei den Requests:\\
+        $\circ$ 'GET ...', ähnlich POST, beschreibt ein Document Request.
+        $\circ$ 'Accept' besagt ob der User Zugriffsrecht hat
+
+        Header bei den Antworten:\\
+        $\circ$ 'HTTP/1.1 200 OK' -- Beschreibt das genutzte HTTP-Protokoll mitsamt Statuscode, hier OK.\\
+        $\circ$ 'Date' beschreibt das Datum an welchem Tag die Nachricht gesendet wurde.\\
+        $\circ$ 'Server' beschreibt die genutzte Webserverarchitektur\\
+        $\circ$ 'Last-Modified' beschreibt wann die Datei zuletzt verändert wurde.\\
+        $\circ$ 'ETag' beschreibt die Version einer Datei und dient dem Caching.\\
+        $\circ$ 'Accept-Ranges' ist die Einheit die der Server akzeptiert.\\
+        $\circ$ 'Content-Length' beschreibt <Body> in Byte.\\
+        $\circ$ 'Vary' beschreibt ob eine Datei tatsächlich gecached wird oder neu beantragt werden soll.\\
+        $\circ$ 'Connection' bezieht sich auf die Folgeaktion. Close steht für das Ende der Session.
+        $\circ$ 'Content-Type' beschreibt die übertragene Datei.\\
+
+        \textbf{Header des TCP-Protokolls}\\
         $\diamond$ Sender TCP Port Nummer (2 Byte)
         \begin{addmargin}[1em]{1em}
             Der spezifizierte Port, von welchem der Sender sendet.
@@ -51,7 +70,6 @@
             Sequenznummer an, um die Packetidentifikation in mehreren Hinsichten zu vereinfachen.\\\\
             \includegraphics[width=30em, height=15em]{SequenceNumber.png}
         \end{addmargin}
-\pagebreak
         $\diamond$ Acknowledge number (4 Byte)
         \begin{addmargin}[1em]{1em}
             Diese dient dazu den Datentransfer zu bestätigen.
@@ -134,7 +152,6 @@
 
         Dementsprechen lassen sich dann die Antworten und Nachfragen des Servers interpretieren.
 
-\pagebreak
         \item Wie viele TCP-Verbindungen werden insgesamt aufgebaut? Wie unterscheidet sich das von dump\_protocols.pcap?\\
         Mithilfe von
         \begin{verbatim}

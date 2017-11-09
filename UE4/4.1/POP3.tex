@@ -1,0 +1,66 @@
+%%
+%% Author: thompson
+%% 09.11.17
+%%
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{a4wide}
+
+% Document
+\begin{document}
+    \section{Post Office Protocol 3}
+    .. anhand RFC 1939.
+    \subsection{Wie ist das POP3-Protokoll grundsätzlich aufgebaut?}
+    The Post Office Protocol - Version 3 (POP3) is intended to
+    permit a workstation to dynamically access a maildrop on a server
+    host in a useful fashion.  Usually, this means that the POP3 protocol
+    is used to allow a workstation to retrieve mail that the server is
+    holding for it. POP3 is not intended to provide extensive manipulation operations of
+    mail on the server - normally, mail is downloaded and then deleted.
+
+    Initially, the server host starts the POP3 service by listening on
+    TCP port 110. When a client host wishes to make use of the service,
+    it establishes a TCP connection with the server host.  When the
+    connection is established, the POP3 server sends a greeting.  The
+    client and POP3 server then exchange commands and responses
+    (respectively) until the connection is closed or aborted.
+
+    Commands in the POP3 consist of a case-insensitive keyword, possibly
+    followed by one or more arguments.  All commands are terminated by a
+    CRLF pair.  Keywords and arguments consist of printable ASCII
+    characters.  Keywords and arguments are each separated by a single
+    SPACE character.  Keywords are three or four characters long. Each
+    argument may be up to 40 characters long.
+
+    Responses in the POP3 consist of a status indicator and a keyword
+    possibly followed by additional information.  All responses are
+    terminated by a CRLF pair.  Responses may be up to 512 characters
+    long, including the terminating CRLF.  There are currently two status
+    indicators: positive ("+OK") and negative ("-ERR").  Servers MUST
+    send the "+OK" and "-ERR" in upper case. Responses to certain commands are multi-line.
+
+    Sessions progresses through a number of states during its
+    lifetime.  Once the TCP connection has been opened and the POP3
+    server has sent the greeting, the session enters the AUTHORIZATION
+    state.  In this state, the client must identify itself to the POP3
+    server.  Once the client has successfully done this, the server
+    acquires resources associated with the client's maildrop, and the
+    session enters the TRANSACTION state.  In this state, the client
+    requests actions on the part of the POP3 server.  When the client has
+    issued the QUIT command, the session enters the UPDATE state.  In
+    this state, the POP3 server releases any resources acquired during
+    the TRANSACTION state and says goodbye.  The TCP connection is then
+    closed.
+
+
+    \subsection{Ist POP3 ein sicheres Protokoll? Warum, Warum nicht?}
+
+    \subsection{Was ist der Unterschied zwischen single-line und multi-line response?}
+
+    \subsection{Vergleiche POP3 mit IMAP und beschreibe wesentliche Unterschiede.}
+
+
+\end{document}

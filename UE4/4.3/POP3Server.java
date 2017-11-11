@@ -22,6 +22,9 @@ public class POP3Server implements Runnable {
                 BufferedReader in = new BufferedReader(new InputStreamReader(cs.getInputStream())); // Setup Listener
                 DataOutputStream out = new DataOutputStream(cs.getOutputStream());                  // Setup Reader
 
+                response = "Hello From Server.";
+                out.writeBytes(response);
+
                 request = in.readLine();
                 if(request.equalsIgnoreCase("quit")){
                     response = "+OK :: Quitting connection.";

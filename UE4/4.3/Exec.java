@@ -4,7 +4,9 @@ import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.Enumeration;
 
-/**
+/** Main to start Server
+ *  @param port = Port to listen on
+ *
  *
  */
 public class Exec {
@@ -17,7 +19,7 @@ public class Exec {
     }
 
     /**
-     * @return Host-IP
+     * @return Prints Information of Server-Connections
      * @throws UnknownHostException
      */
     public static void fetchLocalHost() throws Exception{

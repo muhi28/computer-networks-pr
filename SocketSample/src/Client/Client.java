@@ -1,4 +1,4 @@
-package Client;
+package src.Client;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

@@ -1,4 +1,4 @@
-package Server;
+package src.Server;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

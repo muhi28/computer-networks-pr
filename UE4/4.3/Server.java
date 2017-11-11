@@ -7,7 +7,7 @@ import java.util.Enumeration;
 /** Main to start Server
  *  @param port = Port to listen on
  */
-public class Exec {
+public class Server {
     public static void main(String[]args) throws Exception {
         int port = 6789;
 
@@ -17,7 +17,7 @@ public class Exec {
     }
 
     /**
-     * @return Prints Information of Server-Connections
+     * Prints Information of Server-Connections
      * @throws UnknownHostException
      */
     public static void fetchLocalHost() throws Exception{

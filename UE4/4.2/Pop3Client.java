@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Pop3Client {
-
     private Socket socket;
 
     private boolean debug = false;

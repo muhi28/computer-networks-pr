@@ -37,11 +37,10 @@ public class Pop3Client {
 
         socket.connect(new InetSocketAddress(host, port));
 
+        reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+
         if (isConnected()) {
-
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-
             if (debug) {
                 System.out.println("Client is connected to host !!");
             }
@@ -49,7 +48,8 @@ public class Pop3Client {
             System.out.println("Client isn't connected!!");
         }
 
-        readResponseLine();
+
+        System.out.println(readResponseLine());
 
     }
 
@@ -114,7 +114,9 @@ public class Pop3Client {
      */
     protected String readResponseLine() throws IOException {
 
-        String response = reader.readLine();
+        String response = "" + reader.readLine();
+
+        System.out.println(response);
 
         if (debug) {
             System.out.println("DEBUG [in]: " + response);
@@ -162,7 +164,7 @@ public class Pop3Client {
     public void login(String username, String password) throws IOException {
 
         sendCommand("USER " + username);
-        sendCommand("PASSW " + password);
+        sendCommand("PASS " + password);
 
     }
 

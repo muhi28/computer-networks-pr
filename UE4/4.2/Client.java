@@ -19,16 +19,20 @@ public class Client {
 
         client.connect(host, 6789);
 
-        //client.login("nam@yserver.com", "password");
+        client.login("nam@yserver.com", "password");
 
         System.out.println("Number of emails: " + client.getNumberOfNewMessages());
 
 
-        System.out.print("Insert your command: ");
+        client.sendCommand("RETR");
+        List<Message> messages = client.getMessages();
 
-        String command = sc.next();
+        for (int i = 0; i < messages.size(); i++) {
 
-        client.sendCommand(command);
+            System.out.println("--- Message num. " + i + " ---");
+            System.out.println(messages.get(i).getBody());
+
+        }
 
 
 

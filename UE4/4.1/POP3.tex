@@ -8,11 +8,55 @@
 
 % Packages
 \usepackage{a4wide}
+\usepackage{graphicx}
 
 % Document
 \begin{document}
     \section{Post Office Protocol 3}
     .. anhand RFC 1939.
+
+    \subsection{Allgemeines zu POP3:}
+    \begin{enumerate}
+
+        \item ist ein Kommunikationsprotokoll, um Emails von einem POP-Server abzuholen
+        \item Kommunikation erfolgt zwischen einem Email Client und einem Email Server
+
+    \end{enumerate}
+
+    \subsection{Funktionsweise des POP3:}
+
+    \begin{enumerate}
+
+        \item per Fernzugriff werde gespeicherte Emails abgerufen und lokal gespeichert
+        \item POP sieht Prinzip der Offline-Verarbeitung von E-Mails vor
+        \item Online werden E-Mails vom POP-Server des Clients heruntergeladen
+        \item erst nach erfolgreichem und vollständigem Zugriff werden Emails am Server gelöscht
+        \item Bearbeitung der Emails erfolgt lokal (offline) ohne Verbindunge zum POP-Server
+
+    \end{enumerate}
+
+    \subsection{Anmeldung bei Mailserver:}
+    \begin{enumerate}
+
+        \item Server host startet den POP3-Server,in dem es den TCP Port 110 abhört
+        \item möchte ein Client den Service verwenden -> Client erstellt TCP
+        Verbindung mit dem Server Host her
+        \item nach erfolgreicher Verbindung -> POP3 Server sendet Gruß aus
+        \item Session kommt in die AUTHORIZATION State
+        \item Client muss sich zuletzt identifizieren
+
+    \end{enumerate}
+
+    \subsection{Abrufen von Nachrichten:}
+    %\includegraphics[width=\textwidth]{image_preview.gif}
+    \begin{enumerate}
+
+        \item Client führt hierbei einen Command aus -> Server antwortet auf dieses
+        \item Nachrichten werden von Server lokal am Computer abgespeichert, d.h. es
+        wird einfach eine Kopie der Nachricht am Computer abgespeichert, wobei diese
+        Mail am Server gelöscht wird und nur mehr lokal erreichbar ist
+
+    \end{enumerate}
     \subsection{Wie ist das POP3-Protokoll grundsätzlich aufgebaut?}
     The Post Office Protocol - Version 3 (POP3) is intended to
     permit a workstation to dynamically access a maildrop on a server
@@ -56,6 +100,39 @@
     closed.
 
 
+    \begin{enumerate}
+
+        \item Starten des POP3 Servers
+        \item Indentifizieren des Users innerhalb der AUTHORIZATION State:
+        \begin{enumerate}
+            \item User muss Benutzernamen sowie Passwort eingeben -> hat Server
+            Daten geprüft und ein entsprechendes Maildrop geöffnet ,wechselt POP3
+            Session in die TRANSACTION State
+            \item Client kann nun Kommandos ausführen, auf welche POP3 Server antwortet
+
+        \end{enumerate}
+
+        \item TRANSACTION State:
+        \begin{enumerate}
+            \item nachdem Client erfolgreicht identifiziert wurde, kann Client kommandos ausführen
+            \item nach jedem Kommando gibt der Server eine Antwort
+            \item ist die Sitzung zur Anforderung und Übermittlung der Emails
+            \item alle Befehle zur Bearbeitung von Emails werden hier ausgeführt
+        \end{enumerate}
+
+        \item UPDATE State:
+        \begin{enumerate}
+            \item alle vom Client angegebenen Anforderungen werden hier ausgeführt
+            \item Verbindung zu TCP ist zu diesem Zeitpunkt schon beendet
+            \item führt der Client innerhalb dieser State den QUIT Befehl aus, so
+            wechselt die Session zur UPDATE State
+            \item terminiert die Session ohne das Client QUIT ausgeführt hat, so kommt
+            die Session nicht in den UPDATE Zustand und weiters muss keine Nachricht
+            aus dem Maildrop entfernt werden
+            \item letzter Vorgang stellt sicher, dass Emails nur auf dem Server gelöscht werden,
+            wenn Verbindung ordnungsgemäß beendet wurde
+        \end{enumerate}
+    \end{enumerate}
     \subsection{Ist POP3 ein sicheres Protokoll? Warum, Warum nicht?}
 
     \subsection{Was ist der Unterschied zwischen single-line und multi-line response?}

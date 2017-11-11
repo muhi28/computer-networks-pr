@@ -17,20 +17,20 @@ public class Client {
 
         client.setDebug(true);
 
-        client.connect(host);
+        client.connect(host, 6789);
 
-        client.login("nam@yserver.com", "password");
+        //client.login("nam@yserver.com", "password");
 
         System.out.println("Number of emails: " + client.getNumberOfNewMessages());
 
-        List<Message> messages = client.getMessages();
 
-        for (int i = 0; i < messages.size(); i++) {
+        System.out.print("Insert your command: ");
 
-            System.out.println("--- Message num. " + i + " ---");
-            System.out.println(messages.get(i).getBody());
+        String command = sc.next();
 
-        }
+        client.sendCommand(command);
+
+
 
         client.logout();
         client.disconnect();

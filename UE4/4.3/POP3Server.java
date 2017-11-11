@@ -20,24 +20,24 @@ public class POP3Server implements Runnable {
                 Socket cs = ss.accept();
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(cs.getInputStream())); // Setup Listener
-                DataOutputStream out = new DataOutputStream(cs.getOutputStream());                  // Setup Reader
+                BufferedWriter out = new BufferedWriter(new OutputStreamWriter(cs.getOutputStream()));
 
                 response = "Hello From Server.";
-                out.writeBytes(response);
+                out.write(response);
 
                 request = in.readLine();
                 if(request.equalsIgnoreCase("quit")){
                     response = "+OK :: Quitting connection.";
-                    out.writeBytes(response);
+                    out.write(response);
                     cs.close();
                 }
                 if(request.equalsIgnoreCase("list")){
                     response = "ERROR 511";
-                    out.writeBytes(response);
+                    out.write(response);
                 }
                 if(request.equalsIgnoreCase("retr")){
                     response = "ERROR 512";
-                    out.writeBytes(response);
+                    out.write(response);
                 }
 
             }catch(Exception e){

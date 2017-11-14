@@ -9,6 +9,7 @@
 % Packages
 \usepackage{a4wide}
 \usepackage{graphicx}
+\usepackage{scrextend}
 
 % Document
 \begin{document}
@@ -164,5 +165,18 @@
 
         \end{enumerate}
     \end{enumerate}
+
+    \begin{addmargin}[1em]{1em}
+        $\diamond$ Notes from the UE\\
+        POP3 verschickt Klartext, e.g. es ist Unsicher\\
+        Kommandos: List, Stat, Retr, Rset, NOOP\\
+
+        $\diamond$ Formulierung des Servers\\
+        Single-Line Response: CRLF; z.B: Quit\\
+        Multi-Line Response: CRLF . CRLF; z.B. Retr, List == Stat\\
+
+
+        $\diamond$ Vergleich: IMAP wird alles vom Server geregelt
+    \end{addmargin}
 
 \end{document}

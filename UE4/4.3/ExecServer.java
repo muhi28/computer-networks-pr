@@ -4,10 +4,9 @@ import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.Enumeration;
 
-/** Main to start Server
- *  @param port = Port to listen on
+/** Main to start ExecServer
  */
-public class Server {
+public class ExecServer {
     public static void main(String[]args) throws Exception {
         int port = 6789;
 
@@ -17,11 +16,11 @@ public class Server {
     }
 
     /**
-     * Prints Information of Server-Connections
+     * Prints Information of ExecServer-Connections
      * @throws UnknownHostException
      */
     public static void fetchLocalHost() throws Exception{
-        System.out.println("Server running on:");
+        System.out.println("ExecServer running on:");
         Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
 
         for(NetworkInterface netInt : Collections.list(nets)){

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 /**
-* Sample set of emails for the POP Server implementation.
+* Sample set of emails for the POP ExecServer implementation.
  */
 public class SampleDataBase {
     public static ArrayList<String> messages;
@@ -706,13 +706,13 @@ public class SampleDataBase {
                 "Subject: ***SPAM*** Mrs Susan fernando\n" +
                 "MIME-Version: 1.0\n" +
                 "From: Glynn_Johnson@ajg.com\n" +
-                "X-MIMETrack: MIME-CD by HTTP Server on HC03/AJG(Release 7.0.3 HF768|July 17, 2008) at 09/15/2008\n" +
+                "X-MIMETrack: MIME-CD by HTTP ExecServer on HC03/AJG(Release 7.0.3 HF768|July 17, 2008) at 09/15/2008\n" +
                 " 01:45:59 AM,\n" +
                 "\tMIME-CD complete at 09/15/2008 01:45:59 AM,\n" +
                 "\tSerialize by Router on AJGSMTP01/AJG(Release 7.0.3|September 26, 2007) at\n" +
                 " 09/15/2008 01:46:27 AM\n" +
                 "Date: Mon, 15 Sep 2008 01:45:59 -0500\n" +
-                "X-Mailer: Lotus Domino Web Server Release 7.0.3 HF768 July 17, 2008            \n" +
+                "X-Mailer: Lotus Domino Web ExecServer Release 7.0.3 HF768 July 17, 2008            \n" +
                 "Message-ID: <8552151.1221461162691.JavaMail.SYSTEM@crpsecmail2>\n" +
                 "Content-type: text/plain; charset=US-ASCII\n" +
                 "X-Notes-Item: roadrunner@dept.acme.org; name=AltBlindCopyTo\n" +

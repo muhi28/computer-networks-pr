@@ -38,12 +38,12 @@
     \subsection{Anmeldung bei Mailserver:}
     \begin{enumerate}
 
-        \item Server host startet den POP3-Server,in dem es den TCP Port 110 abhört
-        \item möchte ein Client den Service verwenden -> Client erstellt TCP
-        Verbindung mit dem Server Host her
-        \item nach erfolgreicher Verbindung -> POP3 Server sendet Gruß aus
+        \item ExecServer host startet den POP3-ExecServer,in dem es den TCP Port 110 abhört
+        \item möchte ein POP3Client den Service verwenden -> POP3Client erstellt TCP
+        Verbindung mit dem ExecServer Host her
+        \item nach erfolgreicher Verbindung -> POP3 ExecServer sendet Gruß aus
         \item Session kommt in die AUTHORIZATION State
-        \item Client muss sich zuletzt identifizieren
+        \item POP3Client muss sich zuletzt identifizieren
 
     \end{enumerate}
 
@@ -51,10 +51,10 @@
     %\includegraphics[width=\textwidth]{image_preview.gif}
     \begin{enumerate}
 
-        \item Client führt hierbei einen Command aus -> Server antwortet auf dieses
-        \item Nachrichten werden von Server lokal am Computer abgespeichert, d.h. es
+        \item POP3Client führt hierbei einen Command aus -> ExecServer antwortet auf dieses
+        \item Nachrichten werden von ExecServer lokal am Computer abgespeichert, d.h. es
         wird einfach eine Kopie der Nachricht am Computer abgespeichert, wobei diese
-        Mail am Server gelöscht wird und nur mehr lokal erreichbar ist
+        Mail am ExecServer gelöscht wird und nur mehr lokal erreichbar ist
 
     \end{enumerate}
     \subsection{Wie ist das POP3-Protokoll grundsätzlich aufgebaut?}
@@ -105,31 +105,31 @@
         \item Starten des POP3 Servers
         \item Indentifizieren des Users innerhalb der AUTHORIZATION State:
         \begin{enumerate}
-            \item User muss Benutzernamen sowie Passwort eingeben -> hat Server
+            \item User muss Benutzernamen sowie Passwort eingeben -> hat ExecServer
             Daten geprüft und ein entsprechendes Maildrop geöffnet ,wechselt POP3
             Session in die TRANSACTION State
-            \item Client kann nun Kommandos ausführen, auf welche POP3 Server antwortet
+            \item POP3Client kann nun Kommandos ausführen, auf welche POP3 ExecServer antwortet
 
         \end{enumerate}
 
         \item TRANSACTION State:
         \begin{enumerate}
-            \item nachdem Client erfolgreicht identifiziert wurde, kann Client kommandos ausführen
-            \item nach jedem Kommando gibt der Server eine Antwort
+            \item nachdem POP3Client erfolgreicht identifiziert wurde, kann POP3Client kommandos ausführen
+            \item nach jedem Kommando gibt der ExecServer eine Antwort
             \item ist die Sitzung zur Anforderung und Übermittlung der Emails
             \item alle Befehle zur Bearbeitung von Emails werden hier ausgeführt
         \end{enumerate}
 
         \item UPDATE State:
         \begin{enumerate}
-            \item alle vom Client angegebenen Anforderungen werden hier ausgeführt
+            \item alle vom POP3Client angegebenen Anforderungen werden hier ausgeführt
             \item Verbindung zu TCP ist zu diesem Zeitpunkt schon beendet
-            \item führt der Client innerhalb dieser State den QUIT Befehl aus, so
+            \item führt der POP3Client innerhalb dieser State den QUIT Befehl aus, so
             wechselt die Session zur UPDATE State
-            \item terminiert die Session ohne das Client QUIT ausgeführt hat, so kommt
+            \item terminiert die Session ohne das POP3Client QUIT ausgeführt hat, so kommt
             die Session nicht in den UPDATE Zustand und weiters muss keine Nachricht
             aus dem Maildrop entfernt werden
-            \item letzter Vorgang stellt sicher, dass Emails nur auf dem Server gelöscht werden,
+            \item letzter Vorgang stellt sicher, dass Emails nur auf dem ExecServer gelöscht werden,
             wenn Verbindung ordnungsgemäß beendet wurde
         \end{enumerate}
     \end{enumerate}
@@ -143,8 +143,8 @@
         \item POP3:
         \begin{enumerate}
             \item hier werden ledigliche die Emails aus dem Ordner des Posteingangs
-            vom Server heruntergeladen
-            \item Nutzer kann selbst wählen, ob diese vom Server gelöscht oder behalten
+            vom ExecServer heruntergeladen
+            \item Nutzer kann selbst wählen, ob diese vom ExecServer gelöscht oder behalten
             werden sollen
             \item Meldet man sich an einem anderen Ort an, kann es sein, dass all ihre Emails
             erneut heruntergeladen werden, da diese nicht gelöscht werden
@@ -159,7 +159,7 @@
             \item hierüber wird der komplette Inhalt des Email Kontos stets mit dem Mail-Programm
             auf dem Computer oder Smartphone synchronisiert
             \item wird z.B. eine Nachricht mittels Outlook gesendet, so landet diese im Ordner "Gesendet"
-            sowohl in Outlook, als auch auf dem Server und anderen Geräten wie dem Smartphone
+            sowohl in Outlook, als auch auf dem ExecServer und anderen Geräten wie dem Smartphone
             \item alle Bewegungen des Email-Kontos sind auf allen Geräten gleich
 
         \end{enumerate}

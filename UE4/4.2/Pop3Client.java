@@ -42,10 +42,10 @@ public class Pop3Client {
 
         if (isConnected()) {
             if (debug) {
-                System.out.println("Client is connected to host !!");
+                System.out.println("POP3Client is connected to host !!");
             }
         } else {
-            System.out.println("Client isn't connected!!");
+            System.out.println("POP3Client isn't connected!!");
         }
 
 
@@ -66,7 +66,7 @@ public class Pop3Client {
     /**
      * Used to disconnect the client.
      *
-     * @throws IOException if POP3-Client isn't connected
+     * @throws IOException if POP3-POP3Client isn't connected
      */
     public void disconnect() throws IOException {
 
@@ -97,8 +97,8 @@ public class Pop3Client {
      * Check whether the client is connected or not.
      *
      * @return
-     *          true -> Client is connected to a Server
-     *          false -> Client isn't connected to a Server
+     *          true -> POP3Client is connected to a ExecServer
+     *          false -> POP3Client isn't connected to a ExecServer
      */
     private boolean isConnected() {
 
@@ -123,7 +123,7 @@ public class Pop3Client {
         }
 
         if (response.startsWith("-ERR")) {
-            throw new RuntimeException("Server has returned error: " + response.replaceFirst("-ERR", ""));
+            throw new RuntimeException("ExecServer has returned error: " + response.replaceFirst("-ERR", ""));
 
         }
 

@@ -62,7 +62,7 @@ wesentlichen Unterschiede: HTTP/0.9, HTTP/1.0, HTTP/1.1, HTTP/2.0.
             Ist es ein dynamisch generiertes Dokument?\\
             Ist das GET-Format richtig? ... u.s.w.
         \end{addmargin}
-        Der Server sendet anschließend eine Nachricht zurück zum Anfragensteller.\\
+        Der ExecServer sendet anschließend eine Nachricht zurück zum Anfragensteller.\\
         \footnote[1 Vgl.: HTTP-Statuscodes]{Siehe https://de.wikipedia.org/wiki/HTTP-Statuscode}
         \begin{addmargin}[1em]{1em}
             Information - 100++: Continue, Switching Protocols, Processing\\
@@ -71,14 +71,14 @@ wesentlichen Unterschiede: HTTP/0.9, HTTP/1.0, HTTP/1.1, HTTP/2.0.
             forwarding agent, receiving requests for a URI in its absolute form,
             rewriting all or parts of the message, and forwarding the reformatted
             request toward the server identified by the URI.}, ...\\
-            Client-Fehler - 400++: Bad Request, Unauthorized, Forbidden, Not Found, ...\\
-            Server-Fehler - 500++: Internal Server Error, Bad \footnote[3 Gateway]{A gateway is a
+            POP3Client-Fehler - 400++: Bad Request, Unauthorized, Forbidden, Not Found, ...\\
+            ExecServer-Fehler - 500++: Internal ExecServer Error, Bad \footnote[3 Gateway]{A gateway is a
             receiving agent, acting as a layer above some other server(s) and, if
             necessary, translating the requests to the underlying server's
             protocol.}, Service N/A,...
         \end{addmargin}
         Der Browser des Anfragenstellers erhält das Dokument und rendert gemäß .css/.php/... .
-        Bei vollständiger Übertragung des abgerufenen Protokolls unterbricht der Server die Verbindung zum Klienten.\\
+        Bei vollständiger Übertragung des abgerufenen Protokolls unterbricht der ExecServer die Verbindung zum Klienten.\\
 
         \item \textbf{HTTP/1.0} :: Erweitert um 1994
         Spezifiziert im RFC 1945. Dies erweitert das HTTP/0.9 Protokoll um weitere TCP-IP Verbindungen für multiplen Datentransfer mittels desselben Requests.
@@ -108,7 +108,7 @@ wesentlichen Unterschiede: HTTP/0.9, HTTP/1.0, HTTP/1.1, HTTP/2.0.
         Dadurch kann es zu Kompatibilitätsproblemen kommen. Durch HTTP-Pipelining können mehrere Requests \& Responses innerhalb derselben Verbindung stattfinden.\\
         Im Vergleich zu 1.0, brauchte man quasi per Element eine eigene Verbindung, hier jedoch nicht. Der Transfer aller Elemente geschieht durch diesselbe TCP-Verbindung, was auch
         der Zeitkomplexität zugute kommt.
-        Man kann im Rahmen des HTTP/1.1 auch Daten dem Server übertragen, mittels PUT und DELETE.\\
+        Man kann im Rahmen des HTTP/1.1 auch Daten dem ExecServer übertragen, mittels PUT und DELETE.\\
 
         \item \textbf{HTTP/2.0} :: Erstmals 2015
         Spezifiziert von der IETF als Nachfolger von HTTP/11 und definiert in RFC 7540 und 7541.
@@ -117,7 +117,7 @@ wesentlichen Unterschiede: HTTP/0.9, HTTP/1.0, HTTP/1.1, HTTP/2.0.
             - Übertragungsbeschleunigung mittels Zusammenfassen mehrerer Requests :: via Multiplex\\
             - Erweiterungen der Datenkompression :: HPACK-Algorithmus, Kompression beinhaltet Kopfdaten\\
             - Binär kodierte Übertragung von Inhalten
-            - Server-initiierte Datenübertragung :: Push-Verfahren\\
+            - ExecServer-initiierte Datenübertragung :: Push-Verfahren\\
         \end{addmargin}
 
         \textbf{HTTP-Requestmethoden}:
@@ -149,7 +149,7 @@ wesentlichen Unterschiede: HTTP/0.9, HTTP/1.0, HTTP/1.1, HTTP/2.0.
         HEAD: Same as GET but merely returns HTTP header \& no document body. Validates Cached Document\\
         PUT: Uploads a document to the specified URI\\
         DELETE: Deletes the specified resource\\
-        OPTIONS: Returns HTTP-Server Methods\\
+        OPTIONS: Returns HTTP-ExecServer Methods\\
         CONNECT: Converts the Connection to transparent TCP/IP Tunnel\\
     \end{enumerate}
 
@@ -174,8 +174,8 @@ Sie dies mit Hilfe von telnet und mailsrv.uni-klu.ac.at.
         Standartports sind 110/TCP und 995/TCP (verschlüsselt)
         Es ermöglicht das Auflisten, Empfangen und Löschen von E-Mails am jeweiligen Mailserver.
 
-        Bei POP3 sind keine permanenten Verbindungen zum Webserver notwendig, Verbindung wird je nach Bedarf aufgebaut und nach Anmeldung am Server werden
-        alle Mails vom Server heruntergeladen. Jedoch findet keine Synchronisation zwischen anderen User Agents und POP3 statt.
+        Bei POP3 sind keine permanenten Verbindungen zum Webserver notwendig, Verbindung wird je nach Bedarf aufgebaut und nach Anmeldung am ExecServer werden
+        alle Mails vom ExecServer heruntergeladen. Jedoch findet keine Synchronisation zwischen anderen User Agents und POP3 statt.
         Die Authentifizierung erfolgt mittels Usernamen und Passwort, welche allerdings als Reintext übertragen werden.
         SASL oder APOP dienen hierbei als Schutz dieser Daten.
 
@@ -216,20 +216,20 @@ Sie dies mit Hilfe von telnet und mailsrv.uni-klu.ac.at.
         Das Domain Name System-Protokoll beschreibt alles rund um das Mapping von IP-Adressen auf Domännamen.
         Man vergibt oft Aliase für zusätzliche Hostnamen, um mit mehreren URLs auf dieselbe IP zugreifen zu können.
         Via Load Distribution kann man intelligentes Hosting ermöglichen, so ist es beispielsweise einen Alias auf eine neue IP ziegen zu lassen.
-        VGL.: Hosting von Streaming-Material innerhalb der Server einer anderen Firma.\\
+        VGL.: Hosting von Streaming-Material innerhalb der ExecServer einer anderen Firma.\\
 
         Bei einem globalen Ausfall vom DNS gilt es die IP-Adressen einzugeben.
         Bei Ausfall eines einzelnen DNS-Servers gibt es keine Einschränkungen aufgrund der Vernetzung der ISPs.
-        Prinzipiell hat jeder public Server zumindest 2 Hosts.\\
+        Prinzipiell hat jeder public ExecServer zumindest 2 Hosts.\\
 
-        Das DNS-Protokoll sieht vor, dass bei der Abfrage eines Server immer der nächstgelegenste ISP kontaktiert wird.
+        Das DNS-Protokoll sieht vor, dass bei der Abfrage eines ExecServer immer der nächstgelegenste ISP kontaktiert wird.
         Je nach Iterativer oder Rekursiver Implementierung geschieht folgendes:
         \begin{addmargin}[1em]{1em}
             \begin{enumerate}[$\diamond$]
                 \item Iterativ: Das Usergerät spricht den nächstgelegenen ISP an, welcher mögliche Kontaktdaten des spezifizierten Ziels zurücksendet.
-                Dieser fragt anschließend den zurückgegebenen Kontakt ab, bis der richtige Server gefunden wurde und eine Übertragung erfolgen kann.
+                Dieser fragt anschließend den zurückgegebenen Kontakt ab, bis der richtige ExecServer gefunden wurde und eine Übertragung erfolgen kann.
 
-                \item Rekursiv: Das Usergerät spricht den ISP an, welcher anschließend einen übergeordneten Server abfragt. Sobald der Zielserver gefunden wurde,
+                \item Rekursiv: Das Usergerät spricht den ISP an, welcher anschließend einen übergeordneten ExecServer abfragt. Sobald der Zielserver gefunden wurde,
                 reisen die Kontaktdaten über denselben Weg wieder zurück.
 
             \end{enumerate}

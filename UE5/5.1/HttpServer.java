@@ -7,11 +7,10 @@ import java.net.Socket;
 public class HttpServer{
     private int port;
     private String request, response;
-    private String get, path, http;     // As substrings of request
     private ServerSocket ss;
     private Socket cs;
     private BufferedReader in;
-    private OutputStream out;
+
 
     private boolean debug_printWholeRequest = false;
 
@@ -42,12 +41,15 @@ public class HttpServer{
 
                 // Check for correct GET-Request
                 /** Example: http://localhost:6789/documentRoot/index.html**/
+                // TODO: Send the index.html aswell as its pictures
                 if(request.contains("GET")){
                     String answer = "Mai boi";
                     response = "HTTP/1.1 200 OK\r\n\r\n" + answer;
                     cs.getOutputStream().write(response.getBytes("UTF-8"));
                 }
 
+                // After Transfer, terminate data
+                cs.close();
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -70,7 +72,6 @@ public class HttpServer{
         }
         System.out.println("--------- End of printGetRequest ----------");
     }
-
 
     public static void main(String[]args){
         int port = 6789;

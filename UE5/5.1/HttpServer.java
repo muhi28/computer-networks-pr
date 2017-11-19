@@ -42,17 +42,16 @@ public class HttpServer{
                     String path = request.substring(request.indexOf('/'), request.indexOf('H')-1);
                     File data = fetchFile(path);
                     if((data != null && data.exists())) {
-                        //Setup Datatransfer
-                        byte[] byteBuffer = new byte[(int) data.length()];
-                        BufferedInputStream bufferToClient = new BufferedInputStream(new FileInputStream(data));
-                        bufferToClient.read(byteBuffer,0, byteBuffer.length);
-                        // Send Data
+                        byte[] transfer = new byte[(int) data.length()];
+                        BufferedInputStream transferbuffer = new BufferedInputStream(new FileInputStream(data));
+                        transferbuffer.read(transfer, 0, transfer.length);
+
                         OutputStream os = cs.getOutputStream();
-                        String CLRF = "\r\n\r\n";
-                        String httpResponseHeader = "HTTP/0.9 200 OK" + CLRF;
+                        String httpResponseHeader = "HTTP/0.9 200 OK\r\n\r\n";
                         os.write(httpResponseHeader.getBytes("UTF-8"));
-                        os.write(byteBuffer, 0, byteBuffer.length);
+                        os.write(transfer, 9, transfer.length);
                         os.flush();
+
                     }
                 }
                 // After Transfer, terminate data
@@ -69,6 +68,11 @@ public class HttpServer{
      * @return file of requested path
      */
     private File fetchFile(String path) {
+
+        if(path.matches("(\\/\\.\\.\\/)+")){
+            System.out.println("Malicious Operation caught. Terminating");
+            return null;
+        }
         // Create the path to our file(s)
         String pwd = System.getProperty("user.dir"); // Path up to working dir
         String psd = "/UE5/5.1/documentRoot";                   // Path up to source dir -- FIXME: needs a better solution

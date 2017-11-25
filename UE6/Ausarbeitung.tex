@@ -52,14 +52,73 @@
         \item Wie fügt man folgende hinzu:
         \begin{addmargin}[1em]{1em}
             - Graphische Elemente: \\
+
+            Üblicherweise mithilfe der .ned-Datei realisiert.
+            Hierbei wird der TicToc mittels des network Blocks als Netzwerk
+            gekennzeichnet.\\
+
             - Ausgaben zur Fehlersuche: \\
+
+            Ausgaben werden wie folgt eingefügt:
+
+            einfachste Form:
+            -> EV << "Sending initial message";\\
+
+
+
             - Zustandsvariablen: \\
+
+            Werden innerhalb einer Klasse definiert.
+
+            private:
+            int counter
+
             - (Zufällige) Parameter:
+
+            - über die Parameter eines Moduls können zufällig
+            generierte Werte zurückgegeben werden
+            - um diese Werte verwenden zu können, werden sie innerhalb der
+            handleMessage() eingelesen
+
+            Beispiel:
+
+            // The "delayTime" module parameter can be set to values like
+            // "exponential(5)" (tictoc7.ned, omnetpp.ini), and then here
+            // we'll get a different delay every time.
+            -simtime_t delay = par("delayTime");
+            -EV << "Message arrived, starting to wait " << delay << " secs...\n";
+            -tictocMsg = msg;
+            -scheduleAt(simTime()+delay, event);
+
+            - die Parameter werden in omnetpp.ini übergeben:
+
+            Tictoc7.tic.delayTime = exponential(3s)
+            Tictoc7.toc.delayTime = truncnormal(3s,1s)
+
         \end{addmargin}
 
 
         \item Wie setzt man Vererbung, Verzögerung, Zeitüberschreitung um oder hebt diese auf?\\
 
+
+        \begin{enumerate}
+            \item Vererbung:
+            Umsetzung:
+            Aufhebung:
+
+            \item Verzögerung:
+            Umsetzung:
+            Verzögerungen können mittels dem Aufruf der Methode scheduleAt() realisiert werden.
+            Beispiel:
+            scheduleAt(simTime()+1.0, event);
+            Aufhebung:
+
+            \item Zeitüberschreitung:
+            Umsetzung:
+            Aufhebung:
+
+            \item
+        \end{enumerate}
 
         \item Wie funktionieren Netzwerktopologien mit mehr als 2 Knoten?\\
 

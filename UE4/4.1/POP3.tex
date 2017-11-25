@@ -136,7 +136,27 @@
     \end{enumerate}
     \subsection{Ist POP3 ein sicheres Protokoll? Warum, Warum nicht?}
 
+    \begin{enumerate}
+        \item POP3 setzt Authentifizierung über Benutzername und Passwort voraus
+        \item Benutzername und Passwort werden ungeschützt als Klartext übertragen
+        \item ermöglicht Angreifern den unbemerkten Zugriff auf die Mailbox -> Sicherheitslücke
+    \end{enumerate}
     \subsection{Was ist der Unterschied zwischen single-line und multi-line response?}
+
+    \begin{enumerate}
+        \item Singlie-Line Response:
+        \begin{enumerate}
+            \item es wird eine Zeile als Response zurückgegeben
+            \item terminiert durch CRLF
+        \end{enumerate}
+        \item Multi-Line Response:
+        \begin{enumerate}
+            \item nachdem die erste Line und ein CRLF gesendet wurde, werden die restlichen
+            hinterher gesendet, welche ebenfalls durch ein CRLF terminiert werden
+            \item sind alle Lines verschickt worden so wird eine letzte Line, die aus einem "."
+            und einem CRLF-Paar besteht, versendet -> Ende der Multi-Line mit CRLF.CRLF gekennzeichnet
+        \end{enumerate}
+    \end{enumerate}
 
     \subsection{Vergleiche POP3 mit IMAP und beschreibe wesentliche Unterschiede.}
 

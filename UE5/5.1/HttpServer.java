@@ -8,11 +8,10 @@ public class HttpServer{
     private BufferedReader inFromClient;
 
     private boolean debug_printWholeRequest = false;
-    private boolean debug_fetchFile = true;
+    private boolean debug_fetchFile = false;
 
     public HttpServer(int port){
         this.port = port;
-
     }
 
     public void start(){
@@ -37,6 +36,9 @@ public class HttpServer{
 
                 // Check for correct GET-Request
                 /** Example: http://localhost:6789**/
+                //GET Path HTTP-Protokoll
+                /** Note: HTTP 0.9/1.0 does not support Host Headers,
+                 * and as such request using this protocol will generate 500 errors on the Agent.**/
                 if(request.contains("GET")){
                     // Fetch the data
                     String path = request.substring(request.indexOf('/'), request.indexOf('H')-1);
@@ -49,9 +51,8 @@ public class HttpServer{
                         OutputStream os = cs.getOutputStream();
                         String httpResponseHeader = "HTTP/0.9 200 OK\r\n\r\n";
                         os.write(httpResponseHeader.getBytes("UTF-8"));
-                        os.write(transfer, 9, transfer.length);
+                        os.write(transfer, 0, transfer.length);
                         os.flush();
-
                     }
                 }
                 // After Transfer, terminate data
@@ -59,7 +60,6 @@ public class HttpServer{
             }
         }catch(Exception e){
             e.printStackTrace();
-
         }
     }
 
@@ -88,6 +88,7 @@ public class HttpServer{
 
         if(!new File(pathToFile).exists()){
             System.out.println("\tNonexistant File");
+            return null;
         }
 
         File requestedFile = new File(pathToFile);

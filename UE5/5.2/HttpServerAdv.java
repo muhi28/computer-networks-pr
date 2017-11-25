@@ -48,7 +48,16 @@ public class HttpServerAdv {
                 /**Data ONLY contains some index.html, otherwise ignored.**/
                 // TODO -- Send file to client
                 if(data != null && data.exists()){
+                    byte[] transfer = new byte[(int) data.length()];
+                    BufferedInputStream transferbuffer = new BufferedInputStream(new FileInputStream(data));
+                    transferbuffer.read(transfer, 0, transfer.length);
 
+                    OutputStream os = cs.getOutputStream();
+                    String httpResponseHeader = "HTTP/1.0 200 OK\r\n\r\n";
+                    os.write(httpResponseHeader.getBytes("UTF-8"));
+                    os.write(transfer, 0, transfer.length);
+                    os.flush();
+                    os.close();
                 }
             }
 

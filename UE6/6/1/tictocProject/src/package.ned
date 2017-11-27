@@ -1,0 +1,3 @@
+package tictocproject;
+
+@license(LGPL);

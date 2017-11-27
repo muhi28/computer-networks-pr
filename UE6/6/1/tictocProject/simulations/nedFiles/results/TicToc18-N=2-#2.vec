@@ -1,0 +1,25 @@
+version 2
+run TicToc18-2-20171127-01:24:56-17399
+attr configname TicToc18
+attr datetime 20171127-01:24:56
+attr experiment TicToc18
+attr inifile omnetpp.ini
+attr iterationvars $N=2
+attr iterationvarsf N=2-
+attr measurement $N=2
+attr network TicToc18
+attr processid 17399
+attr repetition 2
+attr replication #2
+attr resultdir results
+attr runnumber 2
+attr seedset 2
+itervar N 2
+param *.numCentralNodes 2
+
+vector 0 TicToc18.tic[1] hopCount:vector ETV
+attr interpolationmode none
+attr source arrival
+attr title "hop count, vector"
+0	3	0.2	2
+

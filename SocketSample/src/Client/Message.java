@@ -10,6 +10,7 @@ public class Message {
 
     private final String body;
 
+
     /**
      * Message Constructor
      *

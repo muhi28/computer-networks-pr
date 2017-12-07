@@ -1,0 +1,82 @@
+%%
+%% Author: thompson
+%% 07.12.17
+%%
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{a4wide}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+\usepackage{amsmath}
+\usepackage{scrextend}
+\usepackage{enumitem}
+\usepackage{verbatim}
+\usepackage{standalone}
+
+% Document
+\begin{document}
+    \section{Übungsblatt 08}
+    \subsection{Das UDP-Protokoll}
+    Wenden Sie Ihr Wissen aus der Vorlesung an und sehen Sie sich zusätzlich RFC 768 (User Datagram
+    Protocol - UDP) an und beantworten Sie folgende Fragen:
+    \begin{enumerate}[label=\textbf{\alph*}.)]
+        \item \textbf{Welche Funktionalität stellt UDP (nicht) zur Verfügung?}\\
+        Das User Datagram Protokol, kurz UDP, soll Datentransfer innerhalb eines Netzwerkes ermöglichen, mit minimalen
+        Protokollmechanismen. Es baut auf dem Internet Protokol(IP) auf.
+        Es ist eine verbindungslose Kommunikation, was bedeutet dass der Empfänger seine
+        Empfangsbereitschaft, etwa via 'Handshake' wie bei TCP, nicht signalisiert haben muss, bevor das Packet gesendet wird.
+        Dadurch gibt es auch keinen Verbindungsstatus, weder am Sender noch am Empfänger.
+        UDP ermöglicht auch keine Congestion oder Flow Control, weshalb Daten unwiederruflich verloren gehen können.
+        IP spezifiziert UDP-Packete als Protokol Nr. 17 (21 Octal).
+
+
+        \item \textbf{Wie sehen die UDP-Header aus?}
+        Das UDP-Format\footnote[1]{https://tools.ietf.org/html/rfc768} sieht wie folgt aus:
+        \begin{verbatim}
+            0       7 8     15 16    23 24     31
+            +--------+--------+--------+--------+
+            |     Source      |   Destination   |
+            |      Port       |      Port       |
+            +--------+--------+--------+--------+
+            |                 |                 |
+            |     Length      |    Checksum     |
+            +--------+--------+--------+--------+
+            |
+            |          Application Data
+            +---------------- ...
+        \end{verbatim}
+        \begin{addmargin}[1em]{1em}
+            - Source Port: Optional - Default-Value = 0\\
+            - Destination Port: Sets Receiver\\
+            - Length: Length of the Datagram, including Header \& Data measured in Octets. Minimum = 8 Octetcs\\
+            - Checksum: Value to validate packet
+        \end{addmargin}
+
+        \textbf{Berechnung einer Checksum}
+        % TODO - What the F
+
+        \item \textbf{Was ist ein Pseudo-Header?}\\
+        Der Pseudoheader ist ein konzeptuelles Prefix zum UDP-header und beinhaltet Source Address,
+        Destination Address, Protokoll und UDP-Länge. Dies bietet Schutz gegen fehlgeleitete Datagramme.
+
+
+        \item \textbf{Wie groß können UDP-Segmente sinnvollerweise sein?}
+        Die maximale UDP-Segmentsize ist vorgegeben durch das IP. Dementsprechend ist die Größe eines
+        jeden UDP-Packetes zwischen 8 Byte und $2^(16)$ Byte.
+
+        The correct maximum UDP message size is 65507, as determined by the following formula:
+        0xffff - (sizeof(IP Header) + sizeof(UDP Header)) = 65535-(20+8) = 65507
+
+        The maximum safe UDP payload is 508 bytes.
+        This is a packet size of 576, minus the maximum 60-byte IP header and the 8-byte UDP header.
+        Except on an IPv6-only route, where the maximum payload is 1212 bytes.
+
+    \end{enumerate}
+
+    Geben sie Beispiele an, wo UDP verwendet wird (wurde).
+
+\end{document}

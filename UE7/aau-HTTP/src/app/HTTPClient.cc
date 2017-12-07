@@ -20,7 +20,7 @@
 #include "HTTPClient.h"
 #include "HTTPClientMsg_m.h"
 #include "HTTPServerMsg_m.h"
-
+#include <algorithm>
 
 Define_Module(HTTPClient);
 

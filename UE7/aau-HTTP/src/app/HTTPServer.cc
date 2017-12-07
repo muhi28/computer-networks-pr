@@ -21,6 +21,8 @@
 #include "HTTPClientMsg_m.h"
 #include "HTTPServerMsg_m.h"
 
+
+
 Define_Module(HTTPServer);
 
 static const char* test =
@@ -94,9 +96,6 @@ bool HTTPServer::checkMeth(const char *meth)
 
 std::string HTTPServer::checkResource(const char *res)
 {
-    //const char *res =     "/test/\r\n";
-    //                      "/test/logo.gif\r\n";
-    //                      "/test/technikErleben.png\r\n";
     std::string filterPath(res);
     std::string crlf("\r\n");
     if(server_debug){ EV << "SERVER :: Filtering Path: " << filterPath << std::endl; }

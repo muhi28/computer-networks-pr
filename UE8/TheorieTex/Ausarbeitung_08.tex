@@ -34,7 +34,7 @@
         IP spezifiziert UDP-Packete als Protokol Nr. 17 (21 Octal).
 
 
-        \item \textbf{Wie sehen die UDP-Header aus?}
+        \item \textbf{Wie sehen die UDP-Header aus?}\\
         Das UDP-Format\footnote[1]{https://tools.ietf.org/html/rfc768} sieht wie folgt aus:
         \begin{verbatim}
             0       7 8     15 16    23 24     31
@@ -53,16 +53,51 @@
             - Source Port: Optional - Default-Value = 0\\
             - Destination Port: Sets Receiver\\
             - Length: Length of the Datagram, including Header \& Data measured in Octets. Minimum = 8 Octetcs\\
-            - Checksum: Value to validate packet
+            - Checksum: 16-Bit-Value to validate packet. Bei UDP Optional.
         \end{addmargin}
 
-        \textbf{Berechnung einer Checksum}
-        % TODO - What the F
+        \textbf{Berechnung einer Checksum}\\
+        Die UDP-Checksum errechnet sich aus der Summe vom Komplement von 1, dem Pseudo-UDP Header(siehe unten) und dem UDP-Datagram.\\
+        $\diamond$ Source Address: 32 Bits/4 Byte\\
+        $\diamond$ Destination Address: 32 Bits/4 Byte\\
+        $\diamond$ 'Zero' aka Reserved: 8 Bits/1 Byte\\
+        $\diamond$ Protokol: 8 Bits/1 Byte\\
+        $\diamond$ UDP Length: Header+Payload Length of actual Datagram.\\
+
+        Sollte man die Checksum nicht setzen so wird diese '0', indem man die Checksum der einfachheitshalber
+        auf 0xFFFF setzt.
+
+
+        \underline{Example: Calculation from Source}
+        ... Man definiert IP-Addressen:
+        Source Address: 152.1.51.27
+        Destination Address: 152.14.94.75
+        ... Die Addressen geteilt in je 16-Bit:
+        0x9801, 0x331b sowie 0x980e, 0x5e4b.
+        ... Diese 4 Summiert ergibt:
+        0x9801 + 0x331b + 0x980e + 0x5e4b = 0x1c175
+        ... Beachte dass es einen Overflow auf 16 Bit gibt, dieser bleibt zunächst.
+        ... Nun addiert man die UDP-Protokollnummer, also '17'
+        17 = 0x0011 + 0x1c175 = 0x1c186
+        ... Zuletzt addiert man die Länge des Datagrams. Für 10 Byte wäre dies:
+        10 = 0x000a + 0x1c186 = 0x1c190
+        % FIXME & TODO
+
 
         \item \textbf{Was ist ein Pseudo-Header?}\\
         Der Pseudoheader ist ein konzeptuelles Prefix zum UDP-header und beinhaltet Source Address,
         Destination Address, Protokoll und UDP-Länge. Dies bietet Schutz gegen fehlgeleitete Datagramme.
-
+        Der Pseudo-UDP Header\footnote[1]{https://tools.ietf.org/html/rfc768} besteht aus 5 Feldern:
+        \begin{verbatim}
+            0       7 8     15 16    23 24    31
+            +--------+--------+--------+--------+
+            |          source address           |
+            +--------+--------+--------+--------+
+            |        destination address        |
+            +--------+--------+--------+--------+
+            |  zero  |protocol|   UDP length    |
+            +--------+--------+--------+--------+
+        \end{verbatim}
 
         \item \textbf{Wie groß können UDP-Segmente sinnvollerweise sein?}
         Die maximale UDP-Segmentsize ist vorgegeben durch das IP. Dementsprechend ist die Größe eines
@@ -78,5 +113,19 @@
     \end{enumerate}
 
     Geben sie Beispiele an, wo UDP verwendet wird (wurde).
+    UDP wird grundsätzlich in Verbindungen verwendet, wo eine schnelle Datenübertragung nötig ist.
+    \begin{enumerate}[$\bullet$]
+        \item Für simple Datenübertragungen kleinerer Einheiten.
+        \item Bei schwacher Hardware
+        \item Für sich schnell ändernde Daten: Wetterdaten, Spiele
+        \item Mutlicast-Traffic: Daten werden an mehrere spezifizierte Klienten gesendet
+        \item
+    \end{enumerate}
+    .. und ähnliche Instanzen.
+    Grund für das Nutzen von UDP ist das Vermeiden des Overheads durch den TCP-Handshake und der marginale
+    Packetverlust gilt als akzeptabel in vielen Applikationen.
+
+    Erweiterungen des UDP, etwa Reliable User Datagram Protocol:RUDP oder UDP-Lite sind Beispiele für
+    sicherere oder noch schnellere Variationen des UDP.
 
 \end{document}

@@ -1,0 +1,3 @@
+This file contains German umlauts ��� and � and is encoded using UTF-8.
+This text file uses line feed (LF) as line delimiter.
+Line feed is the default on UNIX-like operating systems.

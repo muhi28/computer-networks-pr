@@ -1,0 +1,128 @@
+import java.io.*;
+import java.util.Random;
+
+/*
+    Fault at reading instructions. Kept for later references
+*/
+
+
+public class TheRealThing extends Thread {
+    private static float result = -1;
+    private String filename;
+    private int start;
+    private int end;
+    /**
+     * Creates a new TheRealThing thread which operates
+     * on the indexes start to end.
+     */
+    public TheRealThing(String filename, int start, int end) {
+        this.filename = filename;
+        this.start = start;
+        this.end = end;
+    }
+    /**
+     * Performs "eine komplizierte Berechnung" on array and
+     * returns the result
+     */
+    private synchronized float eine_komplizierte_Berechnung(float[] array) {
+// TODO ... erfinden Sie etwas, seien Sie kreativ!
+        /* -- For debugging
+        System.out.println("Echo from + " + Thread.currentThread().getName() + "\n\t Reading data from array: ");
+        for(int i = 0; i < array.length; i++){
+            System.out.println("\t" + array[i]);
+        }
+        */
+        for(int i = 0; i < array.length; i++){
+            this.result += array[i];
+        }
+    }
+    public void run() {
+        System.out.println("Echo #-# " + Thread.currentThread().getName());
+        float[] data = new float[this.end]; // Arraysize <=> end <=> this.end
+
+        // Fetch array & pass to calc
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(this.filename));
+
+            for(int i = this.start; i < this.end; ){
+                String in = br.readLine();
+                if(in.matches("([0-9]*\\.[0-9]*)|([0-9]*)")) {   // Float = 'value'.'value'; 'value';
+                    data[i] = Float.parseFloat(in);
+                    i++;
+                }
+            }
+
+            eine_komplizierte_Berechnung(data);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException d){
+            d.printStackTrace();
+        }
+
+        System.out.println("End  #-# " + Thread.currentThread().getName());
+
+    }
+
+
+    public static void main(String[] args){
+        String pathToFile = "./myArrayData.dat";
+        int numThreads = 10;
+        int arraySize = 9;
+// TODO ...
+        File f = new File(pathToFile);
+        Random r = new Random();
+
+        System.out.println("-- Executing File creation.");
+        try {
+                // Create file
+                PrintWriter pw = new PrintWriter(f);                                  // || DataOutputStream dos = new DataOutputStream(new FileOutputStream(f));
+                pw.println("UE1_4 - Datafile used for Calcs");                        // || dos.writeUTF("UE1_4 - Datafile used for Calcs.\n");
+                pw.print("ID: " + 42);                                                       // || dos.writeUTF(String.valueOf("42"));
+                pw.println(" ||| Size: " + arraySize);                                              // || dos.writeUTF(String.valueOf(arraySize));
+
+                for (int i = 0; i < arraySize; i++) {
+                    pw.println(r.nextFloat()*100);                                    // ||dos.writeUTF(String.valueOf(r.nextFloat()*100));                         // Float-allocs
+                }
+                pw.close(); /** IMPORTANT TO CLOSE/FLUSH, otherwise won't execute write file **/
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("-- Human-Readable of myArrayData.dat");
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(f));
+            for(String line; (line = br.readLine()) != null;){
+                System.out.println(line);
+            }
+
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }catch(IOException d){
+            d.printStackTrace();
+        }
+
+        System.out.println("-- Executing Calculation via Threads");
+        try {
+            // Actual threading
+            TheRealThing rt = new TheRealThing(pathToFile, 0, arraySize);
+
+            Thread[] threadArray = new Thread[numThreads];
+            for(int i = 0; i < numThreads; i++){
+
+                threadArray[i] = new Thread(rt);
+                threadArray[i].run();
+
+            }
+            // Join Threads in separate loop
+            for(int j = 0; j < numThreads; j++){
+                threadArray[j].join();
+            }
+
+        }catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(" -- Result: " + result);
+    }
+}

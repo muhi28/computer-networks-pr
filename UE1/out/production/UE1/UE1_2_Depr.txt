@@ -1,0 +1,73 @@
+import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Scanner;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
+/*
+    Fault with encoding. Kept for later reference
+*/
+
+
+public class Ue1_2 {
+    private File f;
+    private String dest;
+
+    public void init(){
+        System.out.println("Executing UE1_2.");
+        fetchFilePathsFromCmd();
+        executeZipTransformation();
+    }
+
+    private void fetchFilePathsFromCmd(){
+        System.out.println("Enter File-Path.\n" +
+                "Loc.: /home/thompson/Downloads/TODO/RNP-UE/UE1/utf8files\n" +
+                "\tFile.: file1.txt || file2.txt\n");
+        Scanner s = new Scanner(System.in);
+        Path p = Paths.get(s.nextLine());
+
+        System.out.printf("\nPath entered: " + p.toString() + "\n\tChecking validity: ");
+        f = new File(String.valueOf(p));
+        if(!f.exists()){
+            System.out.printf("File not existant.\n");
+        }
+        else{
+            System.out.printf("Existing file found.\n");
+        }
+
+        System.out.printf("Enter an output name. >>");
+        dest = (s.nextLine()+".zip");
+    }
+
+    private void executeZipTransformation(){
+        try {
+            // Reader
+            FileInputStream fis = new FileInputStream(f);
+            ZipEntry zE = new ZipEntry(dest);
+
+            // Writer
+            FileOutputStream fos = new FileOutputStream(dest);
+            ZipOutputStream zos = new ZipOutputStream(fos);
+
+            zos.putNextEntry(zE);
+
+            byte[] bytes = new byte[1024];
+            int r;
+
+            while((r = fis.read(bytes)) >= 0){
+                
+                zos.write(bytes,0, r);
+
+            }
+
+            zos.closeEntry();
+            fis.close();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+

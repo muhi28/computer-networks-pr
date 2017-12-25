@@ -25,6 +25,9 @@
 hs_err_pid*
 .idea/
 Computer-Networks.iml
-UE2/2.1/InternetArchitectures.aux
-UE2/2.2/NetworkTypes.aux
-UE2/2.3/ISO_OSIRefModel.aux
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc

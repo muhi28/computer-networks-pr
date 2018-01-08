@@ -33,8 +33,6 @@ protected:
     virtual void handleTCPSegment(cPacket *msg);
 
     // Additions:
-    virtual void initiate_handshake();
-    virtual void save_message(cPacket *msg);
 
 };
 

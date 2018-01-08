@@ -35,8 +35,6 @@ std::vector<std::string> data{("<html>\n"
         "logo.gif",
         "TechnikErleben.png"};
 
-//const char* server_out = "toLowerLayer";
-//const char* server_in  = "fromLowerLayer";
 
 void HTTPServer::initialize()
 {
@@ -45,5 +43,6 @@ void HTTPServer::initialize()
 
 void HTTPServer::handleMessage(cMessage *msg)
 {
-    send(msg, "toLowerLayer");
+
+
 }

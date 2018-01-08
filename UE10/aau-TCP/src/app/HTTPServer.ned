@@ -23,7 +23,7 @@ simple HTTPServer
 {
     parameters:
         int srcPort = default(80);
-        int destPort = default(66666);
+        int destPort = default(6666);
     gates:
         input fromLowerLayer;
         output toLowerLayer;

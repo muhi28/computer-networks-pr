@@ -51,15 +51,24 @@
 
 Define_Module(TCP);
 
-const bool debug_TCP = true;
-int seqNr, ackNr, headerLength, payload, srcPort, destPort, commando, status;
-std::vector<cPacket> packets;
+int seqNr, ackNr, headerLength, payload;
 
 void TCP::initialize()
 {
     seqNr = 100;
     ackNr = 0;
     payload = 1;
+    headerLength = 20;
+
+    if(getParentModule()->getFullName() == "Server") // FIXME Server !== Server
+    {
+        // Redundant as fuck due to default-vals
+        bubble("listen()!");
+        TCPControlInfo* tci = new TCPControlInfo;
+        tci->setDestPort(80);
+        send(tci, "toUpperLayer");
+    }
+
 }
 
 
@@ -77,11 +86,24 @@ void TCP::handleMessage(cMessage *msg){
 
 void TCP::handleAppMessage(cPacket *msg)
 {
+    TCPControlInfo* tci_in = (TCPControlInfo*) msg; // FIXME Dangerous Cast <-> Look for alternatives
+    //HTTPClientMsg* hcm_in = check_and_cast<HTTPClientMsg*>(msg);
 
-    cPacket* httpMsg = check_and_cast<Packet*>(msg);
-    controlinfo check and cast tcp on httpmsg
-    tcpseg = new tcp seg
+    if(tci_in->getTcpStatus() == 2 && tci_in->getTcpCommand() == 1) // ((If connection is closed & required to open connection
+    {
+        // Initialize first TCPSegment
+        TCPSegment* ts = new TCPSegment;
+        ts->setSrcPort(tci_in->getSrcPort());
+        ts->setDestPort(tci_in->getDestPort());
+        ts->setSeqNr(seqNr);
+        ts->setSyn(true);
+        send(ts, "toLowerLayer");
+        // TODO Schedule Timeout
+    }
+    // TODO
 
+/*
+### TODOs below
     if(controlinfo->gettcpcommand == 0 && controlinfo->gettcpstatus() == 0)
     {
         if(connection == 0){
@@ -97,12 +119,59 @@ void TCP::handleAppMessage(cPacket *msg)
         seqNr++
 
         else if
-
+###*/
 }
 
 void TCP::handleTCPSegment(cPacket *msg)
 {
-    if(connection != 1)
+    // Handle incomming message from "inNet"
+    TCPSegment* in_packet = check_and_cast<TCPSegment*>(msg);
+    //Later: HTTPClientMsg hcm = new HTTPClientMsg;
+
+    // Invoke new Values
+    seqNr = in_packet->getSeqNr();
+    ackNr = in_packet->getAckNr();
+
+    // Very first message does not contain true ACK-Flag
+    if(in_packet->getSyn() == true && in_packet->getAck() == false)
+    {
+        // Invoke new Values :: SEQ:= Rand && ACK:= Old Seq+1
+        ackNr = seqNr + payload;
+        seqNr = (rand() % 301);
+
+        TCPSegment* out_packet = new TCPSegment;
+        out_packet->setSeqNr(seqNr);
+        out_packet->setAckNr(ackNr);
+        out_packet->setSyn(true);
+        out_packet->setAck(true);
+        send(out_packet, "toLowerLayer");
+        // TODO Schedule Timeout
+    }
+    // 2nd Message contains SYN and ACK = true
+    if(in_packet->getSyn() == true && in_packet->getAck() == true)
+    {
+        // Send information to Client
+        TCPControlInfo* tci = new TCPControlInfo;
+        tci->setTcpCommand(0);  // Connection is now open <-> do nothing
+        tci->setTcpStatus(1);   // Connection is open
+        send(tci, "toUpperLayer");
+
+        // Datatransfer to server <-> Answer call
+        ackNr = seqNr+payload;              // FIXME
+        seqNr++;                          // FIXME
+
+        TCPSegment* out_packet = new TCPSegment;
+        out_packet->setSeqNr(seqNr);
+        out_packet->setAckNr(ackNr);
+        out_packet->setAck(true);
+        send(out_packet, "toLowerLayer");
+        // TODO Schedule Timeout for TCPSeg
+    }
+
+    // Actual Datatransfer after establishing connection
+
+/*### TODOS
+    if(in_packet->getSyn() == true)
     {
         tcpSeg->Sets
         connection = -2
@@ -142,4 +211,5 @@ void TCP::handleTCPSegment(cPacket *msg)
                 ->setCi(ci);
         send(HTTPmsg)
     }
+###*/
 }

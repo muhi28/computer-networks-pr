@@ -51,7 +51,9 @@
 
 Define_Module(TCP);
 
-int seqNr, ackNr, headerLength, payload;
+int seqNr, ackNr, seqNew, ackNew, headerLength, payload;
+bool connection_setup, dataTransmission, connection_teardown;
+std::vector<int> queue;
 
 void TCP::initialize()
 {
@@ -68,9 +70,7 @@ void TCP::initialize()
         tci->setDestPort(80);
         send(tci, "toUpperLayer");
     }
-
 }
-
 
 void TCP::handleMessage(cMessage *msg){
     if (msg->arrivedOn("fromUpperLayer")) {
@@ -86,130 +86,85 @@ void TCP::handleMessage(cMessage *msg){
 
 void TCP::handleAppMessage(cPacket *msg)
 {
-    TCPControlInfo* tci_in = (TCPControlInfo*) msg; // FIXME Dangerous Cast <-> Look for alternatives
-    //HTTPClientMsg* hcm_in = check_and_cast<HTTPClientMsg*>(msg);
+    TCPControlInfo* tci = check_and_cast<TCPControlInfo*>(msg->getControlInfo());
 
-    if(tci_in->getTcpStatus() == 2 && tci_in->getTcpCommand() == 1) // ((If connection is closed & required to open connection
+    if(tci->getTcpStatus() == 2 && tci->getTcpCommand() == 1)   // Con is closed && required to open con
     {
-        // Initialize first TCPSegment
-        TCPSegment* ts = new TCPSegment;
-        ts->setSrcPort(tci_in->getSrcPort());
-        ts->setDestPort(tci_in->getDestPort());
-        ts->setSeqNr(seqNr);
-        ts->setSyn(true);
-        send(ts, "toLowerLayer");
-        // TODO Schedule Timeout
+        TCPSegment* ts_out = new TCPSegment;
+        ts_out->setSyn(true);
+        ts_out->setSeqNr(seqNr);
+        send(ts_out, "toLowerLayer");
     }
-    // TODO
-
-/*
-### TODOs below
-    if(controlinfo->gettcpcommand == 0 && controlinfo->gettcpstatus() == 0)
+    if(tci->getTcpStatus() == 0 && tci->getTcpCommand() == 1 ) // TCP do nothing -- Connection is open
     {
-        if(connection == 0){
-            bubble();
-            EV << ;
-            tcpseg->set
-            seq++
-        }
-    }
-    else if(gettcpCommand == 2)
-        tcp->set
-        this->send(tcpSeg, out)
-        seqNr++
+        TCPSegment* ts_out = new TCPSegment;
+                ts_out->setAck(true);
+                ts_out->setSeqNr(seqNr);
+                ts_out->setAckNr(ackNr);
 
-        else if
-###*/
+                ts_out->encapsulate(msg);               // HTTP*Message encapsulated & to next operator
+                send(ts_out, "toLowerLayer");
+    }
+    if(tci->getTcpStatus() == 2 && tci->getTcpCommand() == 1) // TCP close Con -- Con is open
+    {
+        TCPSegment* ts_out = new TCPSegment;
+        ts_out->setFin(true);
+        ts_out->setAck(true);
+        ts_out->setSeqNr(seqNr);
+        ts_out->setAckNr(ackNr);
+        send(ts_out, "toLowerLayer");
+    }
 }
 
 void TCP::handleTCPSegment(cPacket *msg)
 {
-    // Handle incomming message from "inNet"
-    TCPSegment* in_packet = check_and_cast<TCPSegment*>(msg);
-    //Later: HTTPClientMsg hcm = new HTTPClientMsg;
+    TCPSegment* ts = check_and_cast<TCPSegment*>(msg);
+    ackNr = ts->getAckNr();
+    seqNr = ts->getSeqNr();
+    queue.push_back(seqNr);
 
-    // Invoke new Values
-    seqNr = in_packet->getSeqNr();
-    ackNr = in_packet->getAckNr();
-
-    // Very first message does not contain true ACK-Flag
-    if(in_packet->getSyn() == true && in_packet->getAck() == false)
+    // Case 1
+    if(ts->getSyn() == true && ts->getAck() == false && connection_setup)
     {
-        // Invoke new Values :: SEQ:= Rand && ACK:= Old Seq+1
-        ackNr = seqNr + payload;
-        seqNr = (rand() % 301);
+              TCPSegment* ts = new TCPSegment;
+              // FIXME
+              ackNew = seqNr + payload;    // Seq+Payload
+              seqNew = rand() % 301;
 
-        TCPSegment* out_packet = new TCPSegment;
-        out_packet->setSeqNr(seqNr);
-        out_packet->setAckNr(ackNr);
-        out_packet->setSyn(true);
-        out_packet->setAck(true);
-        send(out_packet, "toLowerLayer");
-        // TODO Schedule Timeout
+              ts->setSyn(true);
+              ts->setAck(true);
+              ts->setSeqNr(seqNew);
+              ts->setAckNr(ackNew);
+
+              send(ts, "toLowerLayer");
     }
-    // 2nd Message contains SYN and ACK = true
-    if(in_packet->getSyn() == true && in_packet->getAck() == true)
+    if(ts->getSyn() == true && ts->getAck() == true && connection_setup)
     {
-        // Send information to Client
-        TCPControlInfo* tci = new TCPControlInfo;
-        tci->setTcpCommand(0);  // Connection is now open <-> do nothing
-        tci->setTcpStatus(1);   // Connection is open
-        send(tci, "toUpperLayer");
+              cPacket* p = new cPacket;
+              TCPControlInfo* tci = new TCPControlInfo;
+              // connection open()
+              tci->setTcpStatus(1);
+              tci->setTcpCommand(0);
 
-        // Datatransfer to server <-> Answer call
-        ackNr = seqNr+payload;              // FIXME
-        seqNr++;                          // FIXME
+              p->setControlInfo(tci);
+              send(p, "toUpperLayer");
 
-        TCPSegment* out_packet = new TCPSegment;
-        out_packet->setSeqNr(seqNr);
-        out_packet->setAckNr(ackNr);
-        out_packet->setAck(true);
-        send(out_packet, "toLowerLayer");
-        // TODO Schedule Timeout for TCPSeg
-    }
-
-    // Actual Datatransfer after establishing connection
-
-/*### TODOS
-    if(in_packet->getSyn() == true)
-    {
-        tcpSeg->Sets
-        connection = -2
-        send(tcpSeg, out);
-        ackNr++;
-    }
-    else if
-    {
-        int tmpAckNr = tcpSeg->getAckNr
-                tcp->sets
-                connection = 1;
-        send(tcpseg, out);
-    }
-    else if
-    {
-        //SERVER
-        connection = 1
-                cMessage *HTTPMsg ...
-    }
-    else if(connection == 1 && flags)
-    {
-        TCPControlinfo *ci = ..
-                set
-                Httpsmg
-                msg->setControlinfo(ci)
-    }
-    else if
-    {
-        tcp segs -> sets
+              // Response for server
+              TCPSegment* ts = new TCPSegment;
+              ackNew = seqNr + payload;    // Seq+Payload
+              seqNew = ackNr;
+              ts->setAck(true);
 
 
     }
-    else if
+    if(ts->getAck() == true && ts->getSyn() == false)
     {
-        cMessage * HTTPmsg = new cMessage();
-        tcpCi = new tci
-                ->setCi(ci);
-        send(HTTPmsg)
+        // FIXME WHAT TO DO DAMMIT
+        buildupComplete = true;
     }
-###*/
+    if(ts->getFin() == true)
+    {
+        // FIXME WHAT TO DO DAMMIT
+        terminateConnection = true;
+    }
 }

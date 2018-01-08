@@ -24,6 +24,11 @@
 
 Define_Module(HTTPServer);
 
+int tcpCommand, tcpStatus;
+inet::IPv4Address ipv4_client, ipv4_server;
+inet::IPv6Address ipv6_client, ipv6_server;
+
+int data_index = 0;
 std::vector<std::string> data{("<html>\n"
         "\t<head><title>Test</title></head>\n"
         "\t<body>\n"
@@ -35,14 +40,55 @@ std::vector<std::string> data{("<html>\n"
         "logo.gif",
         "TechnikErleben.png"};
 
-
 void HTTPServer::initialize()
 {
+    tcpCommand = 0;
+    tcpStatus = 2;
+    //ipv4_client = inet::IPv4Address("209.173.21.12");             -- We do not know these at current
+    //ipv6_client = inet::IPv6Address("0:0:0:0:0:ffff:d1ad:150c");  -- We do not know these at current
+    ipv4_server = inet::IPv4Address("209.173.21.12");
+    ipv6_server = inet::IPv6Address("0:0:0:0:0:ffff:d1ad:150c");
+    destPort = par("destPort");
+    //srcPort = par("srcPort");                                     -- We do not know these at current
+
 
 }
 
 void HTTPServer::handleMessage(cMessage *msg)
 {
+    // FIXME Blind code below
+    TCPControlInfo* tci = check_and_cast<TCPControlInfo*>(msg->getControlInfo());
+    HTTPClientMsg* hcm = check_and_cast<HTTPClientMsg*>(msg);
 
+/*    if(tci->getTcpStatus() == 2 && tci->getTcpCommand() == 1) // Closed connection <-> Requested connection
+    {
+        ipv4_client = tci->getSrcIPv4();
+        ipv6_client = tci->getSrcIPv6();
+        srcPort = tci->getSrcPort();
+    }
+*/
+    if(tci->getTcpStatus() == 1 && tci->getTcpCommand() == 0)   //
+    {
+        // Read request
+        std::string request = hcm->getRequest();
+        std::string method = hcm->getMethod();
+        if(method == "GET")
+        {
+            while(data_index != data.size())
+            {
+                std::string response = data.at(data_index++);
 
+                HTTPServerMsg *hsm = new HTTPServerMsg;
+                hsm->setResponse(response.c_str());
+
+                TCPControlInfo* tci = new TCPControlInfo;
+
+                hsm->setControlInfo(tci);
+                send(hsm, "toLowerLayer");
+            }
+        }else{
+            bubble("Wrong Method. Terminating.");
+            EV << "Wrong Method. Terminating." << std::endl;
+        }
+    }
 }

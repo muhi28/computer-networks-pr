@@ -30,89 +30,90 @@ int tcpCommand, tcpStatus;
 inet::IPv4Address ipv4_client, ipv4_server;
 inet::IPv6Address ipv6_client, ipv6_server;
 
+std::vector<std::string> received_resources;
+
+
 void HTTPClient::initialize()
 {
     ipv4_client = inet::IPv4Address("209.173.21.12");
     ipv6_client = inet::IPv6Address("0:0:0:0:0:ffff:d1ad:150c");
     ipv4_server = inet::IPv4Address("209.173.21.12");
     ipv6_server = inet::IPv6Address("0:0:0:0:0:ffff:d1ad:150c");
-
     destPort = par("destPort");
     srcPort = par("srcPort");
 
-   /*     int tcpCommand = 0;      // 0 ... do nothing, 1 ... open connection, 2 ... close connection
-    *     int tcpStatus = 0;       // 1 ... connection is open, 2 ... connection is closed
-    */
-
-    // Initiate Contact
-    tcpCommand = 1;
-    tcpStatus = 2;
-
-    TCPControlInfo* tci = new TCPControlInfo;
-    tci->setTcpCommand(tcpCommand);
-    tci->setTcpStatus(tcpStatus);
-
-    scheduleAt(simTime(), tci);
+    scheduleAt(simTime(), new HTTPClientMsg);
 }
 
 void HTTPClient::handleMessage(cMessage *msg)
 {
-    TCPControlInfo* tci = check_and_cast<TCPControlInfo*>(msg);
-
-    HTTPClientMsg* hcm = new HTTPClientMsg;
-
     if(msg->isSelfMessage())
-    {   // Connect
-        tcpCommand = 1; // Open Connection
-        tcpStatus = 2;  // Connection is closed
+    {
+        // CONNECT
+        tcpCommand = 1;     // Open Connection
+        tcpStatus = 2;      // Connection is closed
 
-        // Setup ControlInfo
+        HTTPClientMsg* hcm = new HTTPClientMsg;
+
         TCPControlInfo* tci = new TCPControlInfo;
         tci->setDestIPv4(ipv4_server);
+        tci->setDestIPv6(ipv6_server);
         tci->setDestPort(destPort);
+        tci->setSrcIPv4(ipv4_client);
+        tci->setSrcIPv6(ipv6_client);
+        tci->setSrcPort(srcPort);
         tci->setTcpCommand(tcpCommand);
         tci->setTcpStatus(tcpStatus);
 
-        // Link Info to HTTPMessage
-        // hcm->setControlInfo(tci);
-        bubble("connect()");
-        send(tci, "toLowerLayer");
-    }
-    /*     int tcpCommand = 0;      // 0 ... do nothing, 1 ... open connection, 2 ... close connection
-        *     int tcpStatus = 0;       // 1 ... connection is open, 2 ... connection is closed
-        */
-
-    if(tci->getTcpStatus() == 1 && tci->getTcpCommand() == 0)   // Connection is now open
-    {
-        request = "/test";
-        hcm->setRequest(request);
-        hcm->setMethod(method);
+        hcm->setControlInfo(tci);
         send(hcm, "toLowerLayer");
+
+    }else{
+        HTTPServerMsg* hsm = check_and_cast<HTTPServerMsg*>(msg);
+        TCPControlInfo* tci = check_and_cast<TCPControlInfo*>(hsm->getControlInfo());
+
+        tcpCommand = tci->getTcpCommand();
+        tcpStatus = tci->getTcpStatus();
+        if(tcpCommand == 0 && tcpStatus == 1)  // TCP do nothing -- Connection is open
+            {
+                // connection open -> HTTPMessage(get)
+                request = "/test";
+                HTTPClientMsg* hcm = new HTTPClientMsg;
+                hcm->setRequest(request);
+                hcm->setMethod(method);
+                TCPControlInfo* tci = new TCPControlInfo;
+                        tci->setDestIPv4(ipv4_server);
+                        tci->setDestIPv6(ipv6_server);
+                        tci->setDestPort(destPort);
+                        tci->setSrcIPv4(ipv4_client);
+                        tci->setSrcIPv6(ipv6_client);
+                        tci->setSrcPort(srcPort);
+                        tci->setTcpCommand(tcpCommand);
+                        tci->setTcpStatus(tcpStatus);
+
+                        hcm->setControlInfo(tci);
+
+
+
+                send(hcm, "toLowerLayer");
+            }
+            if(tcpCommand == 2 && tcpStatus == 1)
+            {            // Close Connection
+                    HTTPClientMsg* hcm = new HTTPClientMsg;
+                    TCPControlInfo* tci = new TCPControlInfo;
+                            tci->setDestIPv4(ipv4_server);
+                            tci->setDestIPv6(ipv6_server);
+                            tci->setDestPort(destPort);
+                            tci->setSrcIPv4(ipv4_client);
+                            tci->setSrcIPv6(ipv6_client);
+                            tci->setSrcPort(srcPort);
+                            tci->setTcpCommand(tcpCommand);
+                            tci->setTcpStatus(tcpStatus);
+
+                            hcm->setControlInfo(tci);
+
+                    send(hcm, "toLowerLayer");
+            }
+
     }
-/*
-       if(msg->isSelfMessage()) {
-           // CONNECTION SETUP
-           httpMsg = check_and_cast<HTTPMsg*>(msg);
-           httpMsg->setSeq(seq);
-           httpMsg->setMethod("");
-           httpMsg->setResource("connect");
-       } else {
-           httpMsg = check_and_cast<HTTPMsg*>(msg);
-
-           // TODO: read httpMsg and send no httpMsg or close connection
-           if(httpMsg->getData() == "") {
-               httpMsg = new HTTPMsg();
-               httpMsg->setSeq(seq);
-               httpMsg->setMethod("GET");
-               httpMsg->setResource("/");
-           } else {
-               httpMsg = new HTTPMsg();
-               httpMsg->setSeq(seq);
-               httpMsg->setMethod("");
-               httpMsg->setResource("close");
-           }
-       }
-
-       send(httpMsg, "out");
-*/
 }

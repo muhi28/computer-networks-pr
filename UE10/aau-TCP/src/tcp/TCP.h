@@ -31,9 +31,6 @@ protected:
     virtual void handleMessage(cMessage *msg);
     virtual void handleAppMessage(cPacket *msg);
     virtual void handleTCPSegment(cPacket *msg);
-
-    // Additions:
-
 };
 
 
